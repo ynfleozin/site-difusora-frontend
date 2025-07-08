@@ -1,5 +1,5 @@
 <section class="app-currencies">
-  @for (cotacao of cotacoes; track cotacoes){
+  @for (cotacao of cotacoes; track cotacao.moeda){
     <div class="currency-card">
     <img src={{cotacao.icon}} alt="">
     <div class="info">
