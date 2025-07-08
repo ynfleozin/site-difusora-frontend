@@ -53,3 +53,35 @@
     }
   }
 }
+
+// Responsividade
+
+@media (max-width: 768px){
+  .app-header {
+
+  .menu-desktop {
+
+    .h-logo {
+      padding: 0.5rem;
+
+      img {
+        max-width: 150px;
+      }
+    }
+
+    .h-nav {
+      padding: 0.5rem;
+    }
+
+    .nav-links{
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+
+      .nav-link a{
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+}
