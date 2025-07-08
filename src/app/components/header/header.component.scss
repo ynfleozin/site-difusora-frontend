@@ -18,7 +18,7 @@
       padding: 1rem;
 
       img {
-        width: 300px;
+        max-width: 250px;
       }
     }
 
@@ -41,7 +41,7 @@
       .nav-link a{
         cursor: pointer;
         font-family: "Urbanist", sans-serif;
-        font-size: 1.5rem;
+        font-size: 1rem;
         color: white;
         text-decoration: none;
       }
