@@ -1,0 +1,14 @@
+<section class="app-currencies">
+  @for (cotacao of cotacoes; track cotacoes){
+    <div class="currency-card">
+    <img src={{cotacao.icon}} alt="">
+    <div class="info">
+      <p class="price">R${{cotacao.preco}}</p>
+      <div class="symbol-change">
+        <p class="symbol">{{cotacao.symbol}}</p>
+        <p class="change positive">+0.23%</p>
+      </div>
+    </div>
+  </div>
+  }
+</section>
