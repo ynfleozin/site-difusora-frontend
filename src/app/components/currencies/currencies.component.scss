@@ -1,11 +1,23 @@
+@mixin carousel-animation($duration: 20s) {
+  animation: scroll-left $duration linear infinite;
+}
+
 .app-currencies {
   background-color: black;
   width: 100%;
-  display: flex;
-  gap: 1rem;
   padding: 1rem;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
+
+  .carousel-container-mobile {
+    display: none;
+  }
+
+  .cards-desktop-fixed {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
 
   .currency-card {
     display: flex;
@@ -16,10 +28,11 @@
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     min-width: 200px;
+    flex-shrink: 0;
 
     img {
-      width: 64px;
-      height: 64px;
+      width: 42px;
+      height: 42px;
     }
 
     .info {
@@ -28,7 +41,7 @@
 
       .price {
         font-weight: 600;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         color: white;
       }
 
@@ -39,14 +52,14 @@
       }
 
       .symbol {
-        font-size: 1rem;
+        font-size: 0.85rem;
         font-weight: 500;
         color: #646464;
         margin: 0;
       }
 
       .change {
-        font-size: 1rem;
+        font-size: 0.85rem;
         margin: 0;
 
         &.positive {
@@ -58,5 +71,33 @@
         }
       }
     }
+  }
+
+  // Responsividade
+  @media (max-width: 768px) {
+    .cards-desktop-fixed {
+      display: none;
+    }
+
+    .carousel-container-mobile {
+      display: flex;
+      gap: 1rem;
+      width: max-content;
+      @include carousel-animation(20s);
+
+      .currency-card {
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
   }
 }
