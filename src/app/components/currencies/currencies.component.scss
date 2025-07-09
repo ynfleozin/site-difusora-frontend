@@ -75,6 +75,8 @@
 
   // Responsividade
   @media (max-width: 768px) {
+
+
     .cards-desktop-fixed {
       display: none;
     }
@@ -86,7 +88,20 @@
       @include carousel-animation(20s);
 
       .currency-card {
+        justify-content: center;
+        min-width: 100px;
         flex-shrink: 0;
+
+        img{
+          width: 24px;
+          height: 24px;
+        }
+
+        .info{
+          .price{
+            font-size: 0.85rem;
+          }
+        }
       }
     }
   }
