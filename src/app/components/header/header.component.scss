@@ -27,7 +27,7 @@
       padding: 1rem;
       display: flex;
       flex-direction: row;
-      background-color: #111111;
+      background-color: #141414;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -63,6 +63,10 @@
 
     .h-logo {
       padding: 0.5rem;
+
+      img {
+        max-width: 100px;
+      }
     }
 
     .h-nav {
