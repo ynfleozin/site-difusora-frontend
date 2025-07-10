@@ -50,6 +50,10 @@
         transform: scale(1.1);
         transition: transform 0.3s ease;
       }
+
+      .nav-link a:hover{
+        border-bottom: 1px solid #CF0101;
+      }
     }
   }
 }
