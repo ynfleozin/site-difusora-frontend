@@ -16,3 +16,12 @@
     transform: scale(1.01);
   }
 }
+
+@media (max-width: 768px){
+  .ad-banner{
+    img{
+      max-width: 400px;
+      height: 150px;
+    }
+  }
+}
