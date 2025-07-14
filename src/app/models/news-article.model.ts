@@ -1,8 +1,11 @@
 export interface NewsArticle {
-  id: string | number;
   title: string;
-  description: string;
-  imageUrl: string;
-  categoriy: string;
-  publicationDate: string | Date;
+  contentHTML: string;
+  sourceUrl: string;
+  sourceName: string;
+  publishedAt: string;
+  imageUrl?: string;
+  author?: string;
+  category?: string;
+  slug?: string;
 }

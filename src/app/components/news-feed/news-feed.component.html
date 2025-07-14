@@ -1,1 +1,33 @@
-<p>news-feed works!</p>
+<div class="feed-container">
+  <section class="latest-news-section">
+    <h2>Últimas Notícias</h2>
+    <div class="news-grid">
+      @for (news of latestNews; track news.title){
+      <app-news-card
+        [isFeatured]="false"
+        [title]="news.title"
+        [imageUrl]="news.imageUrl || ''"
+        [category]="news.category || ''"
+      />
+      }
+    </div>
+  </section>
+
+  <section class="categorized-news-section">
+    @for (categoryGroup of categorizedNewsArray; track categoryGroup[0]){
+    <div class="category-group">
+      <h3>{{ categoryGroup[0] }}</h3>
+      <div class="news-grid">
+        @for (news of categoryGroup[1]; track news.title){
+
+        <app-news-card
+          [title]="news.title"
+          [imageUrl]="news.imageUrl || ''"
+          [category]="news.category || ''"
+        />
+        }
+      </div>
+    </div>
+    }
+  </section>
+</div>
