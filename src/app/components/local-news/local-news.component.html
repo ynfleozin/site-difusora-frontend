@@ -1,5 +1,26 @@
 <section class="local-news">
   <h2>Notícias Locais</h2>
-  <app-main-news-card />
-  <app-news-card />
+
+  <div class="news-grid">
+    <div class="featured-news-wrapper">
+      <app-news-card
+        [category]="featuredNews.category"
+        [title]="featuredNews.title"
+        [description]="featuredNews.description"
+        [imageUrl]="featuredNews.imageUrl"
+        [isFeatured]="true"
+      ></app-news-card>
+    </div>
+
+    <app-news-card
+      *ngFor="let news of regularNews"
+      [category]="news.category"
+      [title]="news.title"
+      [description]="news.description"
+      [imageUrl]="news.imageUrl"
+      [isFeatured]="false"
+    ></app-news-card>
+  </div>
+
+  <button class="read-more-btn">Ver mais</button>
 </section>
