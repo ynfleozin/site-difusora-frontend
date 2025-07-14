@@ -1,0 +1,15 @@
+<div class="feed-container">
+  <section class="latest-news-section">
+    <h2>Últimas Notícias</h2>
+    <div class="news-grid">
+      @for (news of latestNews; track news.title){
+      <app-news-card
+        [isFeatured]="false"
+        [title]="news.title"
+        [imageUrl]="news.imageUrl || ''"
+        [category]="news.category || ''"
+      />
+      }
+    </div>
+  </section>
+</div>
