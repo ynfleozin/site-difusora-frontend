@@ -1,13 +1,18 @@
-<div class="news-card" [class.is-featured]="isFeatured">
-  <img
-    [src]="imageUrl"
-    [alt]="title"
-    (error)="onImageError($event)"
-  />
+<a
+  [routerLink]="['/noticia', slug]"
+  class="news-card"
+  [class.is-featured]="isFeatured"
+>
+  <img [src]="imageUrl" [alt]="title" (error)="onImageError($event)" />
+
   <div class="content">
     <span class="category">{{ category }}</span>
     <h3 class="title">{{ title }}</h3>
-    <p *ngIf="isFeatured" class="description featured-description">{{ description }}</p>
-    <p *ngIf="!isFeatured" class="description">{{ description }}</p>
+
+    @if (isFeatured) {
+    <p class="description featured-description">{{ description }}</p>
+    } @else {
+    <p class="description">{{ description }}</p>
+    }
   </div>
-</div>
+</a>

@@ -8,6 +8,7 @@ interface NewsItem {
   title: string;
   description: string;
   imageUrl: string;
+  slug: string;
 }
 
 @Component({
@@ -27,14 +28,15 @@ export class LocalNewsComponent {
         'Para ele, cabe às nações emergentes reformar o financiamento mundial. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       imageUrl:
         'https://placehold.co/600x400/E0E0E0/333333?text=Imagem+Principal',
+      slug: 'Lula-diz-que-brics-e-fiador-de-um-futuro-promissor',
     },
     {
       id: '2',
       category: 'Outras Notícias',
       title: 'Brics vive impasses sobre Irã, Palestina e Conselho de Segurança',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      imageUrl:
-        'https://placehold.co/300x200/E0E0E0/333333?text=Notícia+1',
+      imageUrl: 'https://placehold.co/300x200/E0E0E0/333333?text=Notícia+1',
+      slug: '',
     },
     {
       id: '3',
@@ -42,8 +44,8 @@ export class LocalNewsComponent {
       title:
         'China e Rússia não terão seus presidentes presentes na Cúpula do Brics',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      imageUrl:
-        'https://placehold.co/300x200/E0E0E0/333333?text=Notícia+2',
+      imageUrl: 'https://placehold.co/300x200/E0E0E0/333333?text=Notícia+2',
+      slug: '',
     },
     {
       id: '4',
@@ -51,16 +53,16 @@ export class LocalNewsComponent {
       title:
         'Rio terá ponto facultativo na segunda-feira devido à Cúpula do Brics',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      imageUrl:
-        'https://placehold.co/300x200/E0E0E0/333333?text=Notícia+3',
+      imageUrl: 'https://placehold.co/300x200/E0E0E0/333333?text=Notícia+3',
+      slug: '',
     },
     {
       id: '5',
       category: 'Direitos Humanos',
       title: 'Lei acaba com atenuantes para crimes sexuais contra mulheres',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      imageUrl:
-        'https://placehold.co/300x200/E0E0E0/333333?text=Notícia+4',
+      imageUrl: 'https://placehold.co/300x200/E0E0E0/333333?text=Notícia+4',
+      slug: '',
     },
   ];
 
