@@ -1,16 +1,36 @@
 <header class="app-header">
-    <div class="menu-desktop">
-      <!-- <div class="h-logo">
-        <img src="assets/imgs/logo-white.png" alt="" />
-      </div> -->
-      <div class="h-nav">
-        <nav>
-          <ul class="nav-links">
-            <li class="nav-link"><a href="">Início</a></li>
-            <li class="nav-link"><a href="">Últimas Notícias</a></li>
-            <li class="nav-link"><a href="">Ouça agora</a></li>
-          </ul>
-        </nav>
-      </div>
+  <div class="menu-desktop">
+    <div class="h-nav">
+      <nav>
+        <ul class="nav-links">
+          <li class="nav-link"><a href="">Início</a></li>
+          <li class="nav-link"><a href="">Últimas Notícias</a></li>
+          <li class="nav-link"><a (click)="openPlayer()">Ouça agora</a></li>
+        </ul>
+      </nav>
     </div>
+  </div>
 </header>
+
+<!-- Mini Player -->
+@if (showPlayer) {
+  <div class="mini-player">
+    <audio #audio controls hidden>
+      <source
+        src="https://r15.ciclano.io/proxy/zyiradio/stream"
+        type="audio/mpeg"
+      />
+      Seu navegador não suporta o áudio.
+    </audio>
+    <div class="player-controls">
+      <button (click)="togglePlay()" aria-label="Tocar/Pausar">
+        <i class="{{ isPlaying ? 'fas fa-pause' : 'fas fa-play' }}"></i>
+      </button>
+      <span>Rádio Difusora</span>
+      <button (click)="closePlayer()" aria-label="Fechar player">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+}
+
