@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +7,28 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
+export class HeaderComponent implements AfterViewInit {
   showPlayer = false;
   isPlaying = false;
 
   @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
+  @ViewChild('menuToggle', { static: false }) menuToggle!: ElementRef;
+  @ViewChild('mobileLinks', { static: false }) mobileLinks!: ElementRef;
+  @ViewChild('menuOverlay', { static: false }) menuOverlay!: ElementRef;
+
+  ngAfterViewInit() {
+    if (this.menuToggle && this.mobileLinks && this.menuOverlay) {
+      this.menuToggle.nativeElement.addEventListener('click', () => {
+        this.mobileLinks.nativeElement.classList.toggle('open');
+        this.menuOverlay.nativeElement.classList.toggle('show');
+      });
+
+      this.menuOverlay.nativeElement.addEventListener('click', () => {
+        this.mobileLinks.nativeElement.classList.remove('open');
+        this.menuOverlay.nativeElement.classList.remove('show');
+      });
+    }
+  }
 
   openPlayer() {
     this.showPlayer = true;

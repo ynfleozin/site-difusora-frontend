@@ -10,25 +10,47 @@
       </nav>
     </div>
   </div>
+  <div class="menu-mobile">
+    <button #menuToggle class="menu-toggle">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="#fff"
+          d="M2 6a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m0 6.032a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m1 5.033a1 1 0 1 0 0 2h18a1 1 0 0 0 0-2z"
+        />
+      </svg>
+    </button>
+
+    <div #menuOverlay class="mobile-menu-overlay">
+      <ul #mobileLinks class="mobile-links">
+        <li><a href="/">Início</a></li>
+        <li><a (click)="openPlayer()">Ouça Agora</a></li>
+        <li><a href="/">Últimas Notícias</a></li>
+      </ul>
+    </div>
+  </div>
 </header>
 
 <!-- Mini Player -->
-  <div class="mini-player" [class.hidden-player]="!showPlayer">
-    <audio #audio controls hidden>
-      <source
-        src="https://r15.ciclano.io/proxy/zyiradio/stream"
-        type="audio/mpeg"
-      />
-      Seu navegador não suporta o áudio.
-    </audio>
-    <div class="player-controls">
-      <button (click)="togglePlay()" aria-label="Tocar/Pausar">
-        <i class="{{ isPlaying ? 'fas fa-pause' : 'fas fa-play' }}"></i>
-      </button>
-      <span>Rádio Difusora</span>
-      <button (click)="closePlayer()" aria-label="Fechar player">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
+<div class="mini-player" [class.hidden-player]="!showPlayer">
+  <audio #audio controls hidden>
+    <source
+      src="https://r15.ciclano.io/proxy/zyiradio/stream"
+      type="audio/mpeg"
+    />
+    Seu navegador não suporta o áudio.
+  </audio>
+  <div class="player-controls">
+    <button (click)="togglePlay()" aria-label="Tocar/Pausar">
+      <i class="{{ isPlaying ? 'fas fa-pause' : 'fas fa-play' }}"></i>
+    </button>
+    <span>Rádio Difusora</span>
+    <button (click)="closePlayer()" aria-label="Fechar player">
+      <i class="fas fa-times"></i>
+    </button>
   </div>
-
+</div>
