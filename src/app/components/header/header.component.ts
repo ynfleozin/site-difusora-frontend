@@ -15,18 +15,29 @@ export class HeaderComponent {
 
   openPlayer() {
     this.showPlayer = true;
-    setTimeout(() => this.audioRef?.nativeElement.play());
-    this.isPlaying = true;
+    this.playAudio();
   }
 
   togglePlay() {
-    const audio = this.audioRef.nativeElement;
     if (this.isPlaying) {
-      audio.pause();
+      this.audioRef.nativeElement.pause();
+      this.isPlaying = false;
     } else {
-      audio.play();
+      this.playAudio();
     }
-    this.isPlaying = !this.isPlaying;
+  }
+
+  private playAudio() {
+    const audio = this.audioRef.nativeElement;
+    audio
+      .play()
+      .then(() => {
+        this.isPlaying = true;
+      })
+      .catch((error) => {
+        console.error('Erro ao tentar reproduzir o áudio:', error);
+        this.isPlaying = false;
+      });
   }
 
   closePlayer() {

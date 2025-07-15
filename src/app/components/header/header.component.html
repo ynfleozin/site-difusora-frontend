@@ -13,8 +13,7 @@
 </header>
 
 <!-- Mini Player -->
-@if (showPlayer) {
-  <div class="mini-player">
+  <div class="mini-player" [class.hidden-player]="!showPlayer">
     <audio #audio controls hidden>
       <source
         src="https://r15.ciclano.io/proxy/zyiradio/stream"
@@ -32,5 +31,4 @@
       </button>
     </div>
   </div>
-}
 
