@@ -1,1 +1,61 @@
-<p>news works!</p>
+<div class="news-page">
+  <button class="back-button" (click)="goBack()">← Voltar</button>
+
+  <div class="news-header">
+    <h1 class="news-title">{{ noticia?.title }}</h1>
+
+    <div class="news-meta">
+      <span
+        ><i class="fa-solid fa-user"></i>
+        {{ noticia?.author ? noticia?.author : noticia?.sourceName }}</span
+      >
+      <span
+        ><i class="fa-solid fa-clock"></i>
+        {{ noticia?.publishedAt | date : "dd/MM/yyyy HH:mm" }}</span
+      >
+    </div>
+  </div>
+
+  <div class="news-image-wrapper">
+    <img
+      [src]="noticia?.imageUrl"
+      alt="Imagem da notícia"
+      (error)="onImageError($event)"
+    />
+  </div>
+
+  <div class="news-content" [innerHTML]="noticia?.contentHTML"></div>
+
+  <p class="news-source">
+    Fonte: <span>{{ noticia?.sourceName }}</span>
+  </p>
+
+  <a class="full-article-button" [href]="noticia?.sourceUrl" target="_blank">
+    Ler notícia na íntegra
+  </a>
+
+  <!-- Compartilhamento -->
+  <div class="share-section">
+    <p>Compartilhar:</p>
+    <button (click)="shareWhatsApp()">WhatsApp</button>
+    <button (click)="copyLink()">Copiar Link</button>
+  </div>
+
+  <!-- Outras notícias -->
+  <div class="related-news">
+    <h3>Outras notícias</h3>
+    <div class="related-grid">
+      @for (related of outrasNoticias; track related.slug) {
+      <div class="related-card">
+        <img
+          [src]="related.imageUrl || ''"
+          alt="Imagem relacionada"
+          (error)="onImageError($event)"
+        />
+        <p class="related-title">{{ related.title }}</p>
+        <a [routerLink]="['/noticia', related.slug]">Ler mais</a>
+      </div>
+      }
+    </div>
+  </div>
+</div>
