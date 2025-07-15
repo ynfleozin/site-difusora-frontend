@@ -1,0 +1,72 @@
+@import "../../../color-variables.scss";
+
+.app-footer {
+  background-image: url('../../../../public/assets/imgs/footerBackground.webp');
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2rem;
+
+  @media(max-width: 768px){
+    padding: 1rem;
+  }
+
+  img {
+    margin-top: 2rem;
+  }
+
+  .f-nav {
+    display: flex;
+    text-align: center;
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+
+      @media(max-width: 768px){
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .nav-link {
+        cursor: pointer;
+        margin: 0 10px;
+        color: #ffff;
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
+
+      .nav-link:hover {
+        color: $primary-color;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+
+  .f-social {
+    .social-icon {
+      color: white;
+      width: 45px;
+      height: auto;
+      margin: 0 10px;
+    }
+
+    .social-icon:hover {
+      color: $primary-color;
+      transition: all 0.3s ease-in-out;
+      transform: scale(1.1);
+    }
+  }
+}
+
+.copyright {
+  padding: 0.8rem;
+  width: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+  color: black;
+  background-color: #ffff;
+}
