@@ -5,6 +5,24 @@
         <ul class="nav-links">
           <li class="nav-link"><a href="">Início</a></li>
           <li class="nav-link"><a href="">Últimas Notícias</a></li>
+          <li class="nav-link dropdown">
+            <a (click)="toggleCategories('desktop')">Categorias</a>
+            <ul class="dropdown-menu" [class.show]="showDesktopCategories">
+              <li><a href="/categorias/cultura">Cultura</a></li>
+              <li>
+                <a href="/categorias/direitos-humanos">Direitos Humanos</a>
+              </li>
+              <li><a href="/categorias/economia">Economia</a></li>
+              <li><a href="/categorias/educacao">Educação</a></li>
+              <li><a href="/categorias/esportes">Esportes</a></li>
+              <li><a href="/categorias/geral">Geral</a></li>
+              <li><a href="/categorias/internacional">Internacional</a></li>
+              <li><a href="/categorias/justica">Justiça</a></li>
+              <li><a href="/categorias/meio-ambiente">Meio Ambiente</a></li>
+              <li><a href="/categorias/politica">Política</a></li>
+              <li><a href="/categorias/saude">Saúde</a></li>
+            </ul>
+          </li>
           <li class="nav-link"><a (click)="openPlayer()">Ouça agora</a></li>
         </ul>
       </nav>
@@ -28,14 +46,38 @@
     <div #menuOverlay class="mobile-menu-overlay">
       <ul #mobileLinks class="mobile-links">
         <li><a href="/">Início</a></li>
-        <li><a (click)="openPlayer()">Ouça Agora</a></li>
         <li><a href="/">Últimas Notícias</a></li>
+        <li><a (click)="openPlayer()">Ouça Agora</a></li>
+        <li class="dropdown-mobile">
+          <a
+            (click)="toggleCategories('mobile'); $event.stopPropagation()"
+            [class.active]="showMobileCategories"
+          >
+            Categorias
+            <i
+              class="fas fa-chevron-down dropdown-arrow"
+              [class.rotated]="showMobileCategories"
+            ></i>
+          </a>
+          <ul class="dropdown-menu-mobile" [class.show]="showMobileCategories">
+            <li><a href="/categorias/cultura">Cultura</a></li>
+            <li><a href="/categorias/direitos-humanos">Direitos Humanos</a></li>
+            <li><a href="/categorias/economia">Economia</a></li>
+            <li><a href="/categorias/educacao">Educação</a></li>
+            <li><a href="/categorias/esportes">Esportes</a></li>
+            <li><a href="/categorias/geral">Geral</a></li>
+            <li><a href="/categorias/internacional">Internacional</a></li>
+            <li><a href="/categorias/justica">Justiça</a></li>
+            <li><a href="/categorias/meio-ambiente">Meio Ambiente</a></li>
+            <li><a href="/categorias/politica">Política</a></li>
+            <li><a href="/categorias/saude">Saúde</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
 </header>
 
-<!-- Mini Player -->
 <div class="mini-player" [class.hidden-player]="!showPlayer">
   <audio #audio controls hidden>
     <source
