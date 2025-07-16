@@ -1,20 +1,48 @@
 @import '../../../color-variables.scss';
 
+// Mixins
+@mixin flex-center($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin dropdown-base {
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  list-style: none;
+  padding: 0;
+}
+
+@mixin nav-link-style {
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    border-bottom: 1px solid #CF0101;
+  }
+}
+
+// Header Base
 .app-header {
   display: flex;
   flex-direction: row;
   width: 100%;
   background-color: $secondary-color;
 
+  // Menu Desktop
   .menu-desktop {
-    justify-content: center;
-    align-items: center;
+    @include flex-center();
     width: 100%;
 
     .h-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex-center();
       padding: 1rem;
 
       img {
@@ -25,11 +53,9 @@
     .h-nav {
       width: 100%;
       padding: 1rem;
-      display: flex;
+      @include flex-center();
       flex-direction: row;
       background-color: #141414;
-      align-items: center;
-      justify-content: center;
       text-align: center;
     }
 
@@ -42,30 +68,16 @@
         position: relative;
 
         a {
-          cursor: pointer;
-          font-size: 1rem;
-          color: white;
-          text-decoration: none;
-        }
-
-        a:hover {
-          border-bottom: 1px solid #CF0101;
+          @include nav-link-style();
         }
 
         &.dropdown {
           .dropdown-menu {
+            @include dropdown-base();
             display: none;
-            position: absolute;
-            background-color: #333;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            list-style: none;
-            padding: 0;
             margin-top: 1rem;
             left: 50%;
             transform: translateX(-50%);
-
 
             &.show {
               display: block;
@@ -92,6 +104,7 @@
     }
   }
 
+  // Menu Mobile
   .menu-mobile {
     display: none;
     justify-content: space-between;
@@ -121,6 +134,10 @@
       height: 100vh;
       background-color: rgba(0, 0, 0, 0.6);
       z-index: 100;
+
+      &.show {
+        display: block;
+      }
     }
 
     .mobile-links {
@@ -138,6 +155,10 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+
+      &.open {
+        right: 0;
+      }
 
       li {
         width: 100%;
@@ -162,10 +183,10 @@
           .dropdown-arrow {
             transition: transform 0.3s ease-in-out;
             font-size: 1rem;
-          }
 
-          .dropdown-arrow.rotated {
-            transform: rotate(180deg);
+            &.rotated {
+              transform: rotate(180deg);
+            }
           }
         }
 
@@ -202,17 +223,10 @@
         }
       }
     }
-
-    .mobile-links.open {
-      right: 0;
-    }
-
-    .mobile-menu-overlay.show {
-      display: block;
-    }
   }
 }
 
+// Mini Player
 .mini-player {
   position: fixed;
   bottom: 1rem;
@@ -251,9 +265,7 @@
   }
 }
 
-
 // Responsividade
-
 @media (max-width: 768px) {
   .app-header {
     .menu-desktop {
@@ -266,6 +278,7 @@
   }
 }
 
+// Utilitários
 .hidden-player {
   display: none !important;
 }
