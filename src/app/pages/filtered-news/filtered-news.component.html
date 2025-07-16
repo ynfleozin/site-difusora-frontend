@@ -1,1 +1,33 @@
-<p>filtered-news works!</p>
+<div class="filtered-news-container">
+  <h1>{{ categoryName }}</h1>
+
+  @if(isLoading){
+  <div class="loading-spinner">Carregando notícias...</div>
+  }
+
+  @if(error){
+  <div class="error-message">
+    {{ error }}
+  </div>
+  }
+
+  @if(!isLoading && !error && filteredNews.length > 0){
+  <div class="news-grid">
+    @for(news of filteredNews; track news.title){
+    <app-news-card
+      [category]="news.category"
+      [title]="news.title"
+      [imageUrl]="news.imageUrl"
+      [isFeatured]="false"
+      [slug]="news.slug"
+    />
+    }
+  </div>
+  }
+
+  @if(!isLoading && !error && filteredNews.length === 0){
+  <div class="no-news-message">
+    Nenhuma notícia encontrada para esta categoria.
+  </div>
+  }
+</div>
