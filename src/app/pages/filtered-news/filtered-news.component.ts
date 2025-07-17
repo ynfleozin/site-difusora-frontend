@@ -48,6 +48,10 @@ export class FilteredNewsComponent implements OnInit, OnDestroy {
         next: (news) => {
           this.filteredNews = news;
           this.isLoading = false;
+
+          if(news && news.length > 0){
+            this.categoryName = news[0].category;
+          }
         },
         error: (err) => {
           console.error('Erro ao carregar notícias por categoria.', err);
