@@ -2,23 +2,28 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { NewsArticle } from '../models/news-article.model';
 import { MOCK_NEWS } from '../../../public/assets/mock-news';
+import { LocalNews } from '../models/local-news.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class NewsService {
+  constructor() {}
 
-  constructor() { }
+  addNews(newsData: LocalNews): Observable<any> {
+    console.log('Enviando para o backend...', newsData);
 
-  getNewsByCategory(category: string): Observable<NewsArticle[]>{
+    return of({ sucess: true, data: newsData });
+  }
+
+  getNewsByCategory(category: string): Observable<NewsArticle[]> {
     const filtered = MOCK_NEWS.filter(
-      news => news.category?.toLowerCase() === category.toLowerCase()
+      (news) => news.category?.toLowerCase() === category.toLowerCase()
     );
     return of(filtered);
   }
 
-  getAllNews(): Observable<NewsArticle[]>{
+  getAllNews(): Observable<NewsArticle[]> {
     return of(MOCK_NEWS);
   }
 }
