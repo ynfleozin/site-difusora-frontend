@@ -1,5 +1,6 @@
 export interface NewsArticle {
   title: string;
+  description: string;
   contentHTML: string;
   sourceUrl: string;
   sourceName: string;

@@ -2,6 +2,7 @@
   <h2>Notícias Locais</h2>
 
   <div class="news-grid">
+    @if (featuredNews) {
     <div class="featured-news-wrapper">
       <app-news-card
         [category]="featuredNews.category"
@@ -12,9 +13,10 @@
         [slug]="featuredNews.slug"
       ></app-news-card>
     </div>
+    }
 
+    @for (news of regularNews; track news.slug) {
     <app-news-card
-      *ngFor="let news of regularNews"
       [category]="news.category"
       [title]="news.title"
       [description]="news.description"
@@ -22,6 +24,9 @@
       [isFeatured]="false"
       [slug]="news.slug"
     ></app-news-card>
+    } @empty {
+    <p>Nenhuma outra notícia local disponível no momento.</p>
+    }
   </div>
 
   <button class="read-more-btn">Ver mais</button>

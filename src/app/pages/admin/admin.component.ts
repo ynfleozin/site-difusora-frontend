@@ -9,7 +9,12 @@ import { CommonModule } from '@angular/common';
 import { NewsService } from '../../services/news.service';
 import { BannerService } from '../../services/banner.service';
 import { Banner } from '../../models/banner.model';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -34,6 +39,7 @@ export class AdminComponent implements OnInit {
       category: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       imageUrl: new FormControl('', Validators.required),
+      body: new FormControl('', Validators.required),
     });
   }
 
@@ -60,7 +66,7 @@ export class AdminComponent implements OnInit {
     }
 
     const slug = this.newsForm.value.title.toLowerCase().replace(/\s+/g, '-');
-    const newsData = { ...this.newsForm.value, slug };
+    const newsData = { ...this.newsForm.value, slug, publishedAt: new Date() };
 
     this.newsService.addNews(newsData).subscribe({
       next: () => {

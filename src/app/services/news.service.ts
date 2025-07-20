@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { NewsArticle } from '../models/news-article.model';
-import { MOCK_NEWS } from '../../../public/assets/mock-news';
 import { LocalNews } from '../models/local-news.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,6 +17,10 @@ export class NewsService {
   addNews(newsData: LocalNews): Observable<any> {
     console.log('Enviando para o backend...', newsData);
     return this.http.post(this.apiUrl, newsData);
+  }
+
+  getLocalNews(): Observable<NewsArticle[]> {
+    return this.http.get<NewsArticle[]>(`${this.apiUrl}/local`);
   }
 
   getNewsByCategory(category: string): Observable<NewsArticle[]> {

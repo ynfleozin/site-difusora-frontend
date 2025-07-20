@@ -6,43 +6,55 @@
     <form [formGroup]="newsForm" (ngSubmit)="onSubmitNews()">
       <div class="form-field">
         <label for="title">Título</label>
-        <input id="title" type="text" formControlName="title">
+        <input id="title" type="text" formControlName="title" />
       </div>
       <div class="form-field">
         <label for="category">Categoria</label>
-        <input id="category" type="text" formControlName="category">
+        <input id="category" type="text" formControlName="category" />
       </div>
       <div class="form-field">
         <label for="description">Descrição</label>
         <textarea id="description" formControlName="description"></textarea>
       </div>
       <div class="form-field">
-        <label for="imageUrl">URL da Imagem</label>
-        <input id="imageUrl" type="text" formControlName="imageUrl">
+        <label for="body">Corpo da Notícia</label>
+        <textarea id="body" formControlName="body" rows="10"></textarea>
       </div>
-      <button type="submit" [disabled]="newsForm.invalid">Adicionar Notícia</button>
+      <div class="form-field">
+        <label for="imageUrl">URL da Imagem</label>
+        <input id="imageUrl" type="text" formControlName="imageUrl" />
+      </div>
+      <button type="submit" [disabled]="newsForm.invalid">
+        Adicionar Notícia
+      </button>
     </form>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="banners-container">
     <h3>Gerenciar Banners</h3>
 
     @for (banner of banners(); track banner.id) {
-      <div class="banner-manager">
-        <h4>{{ banner.name }} (ID: {{ banner.id }})</h4>
-        <p>Imagem Atual:</p>
-        <img [src]="banner.imageUrl" alt="{{ banner.name }}" class="current-banner-preview">
+    <div class="banner-manager">
+      <h4>{{ banner.name }} (ID: {{ banner.id }})</h4>
+      <p>Imagem Atual:</p>
+      <img
+        [src]="banner.imageUrl"
+        alt="{{ banner.name }}"
+        class="current-banner-preview"
+      />
 
-        <div class="form-field">
-          <label for="banner-{{banner.id}}">Nova URL da Imagem</label>
-          <input type="text" id="banner-{{banner.id}}" #newUrlInput>
-          <button (click)="onUpdateBanner(banner.id, newUrlInput)">Atualizar Banner</button>
-        </div>
+      <div class="form-field">
+        <label for="banner-{{ banner.id }}">Nova URL da Imagem</label>
+        <input type="text" id="banner-{{ banner.id }}" #newUrlInput />
+        <button (click)="onUpdateBanner(banner.id, newUrlInput)">
+          Atualizar Banner
+        </button>
       </div>
+    </div>
     } @empty {
-      <p>Carregando banners ou nenhum banner encontrado...</p>
+    <p>Carregando banners ou nenhum banner encontrado...</p>
     }
   </div>
 </section>
