@@ -7,7 +7,7 @@ import { ApiResponse } from '../models/currency.model';
   providedIn: 'root',
 })
 export class CurrenciesService {
-  private apiUrl = 'http://localhost:3001/api/currencies';
+  private readonly apiUrl = 'http://localhost:3001/api/currencies';
 
   constructor(private http: HttpClient) {}
 
