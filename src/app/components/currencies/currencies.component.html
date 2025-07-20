@@ -1,59 +1,13 @@
 <section class="app-currencies">
-  <!-- Layout para Desktop -->
-  <div class="cards-desktop-fixed">
-    @for (cotacao of cotacoes; track cotacao.symbol){
-    <div class="currency-card">
-      <img [src]="cotacao.icon" [alt]="'Ícone ' + cotacao.moeda" />
-      <div class="info">
-        <p class="price">{{ cotacao.preco | currency:'BRL':'symbol':'1.2-4' }}</p>
-        <div class="symbol-change">
-          <p class="symbol">{{ cotacao.symbol }}</p>
-          <p class="change" [ngClass]="{
-              'positive': cotacao.change >= 0,
-              'negative': cotacao.change < 0
-            }">
-            {{ cotacao.change >= 0 ? '+' : '' }}{{ cotacao.change | percent:'1.2-2' }}
-          </p>
-        </div>
-      </div>
-    </div>
+  <div class="currency-list-desktop">
+    @for (cotacao of cotacoes; track cotacao.symbol) {
+      <app-currency-card [currency]="cotacao"></app-currency-card>
     }
   </div>
 
-  <!-- Layout para Mobile  -->
-  <div class="carousel-container-mobile">
-    @for (cotacao of cotacoes; track cotacao.symbol; let i = $index){
-    <div class="currency-card">
-      <img [src]="cotacao.icon" [alt]="'Ícone ' + cotacao.moeda" />
-      <div class="info">
-        <p class="price">{{ cotacao.preco | currency:'BRL':'symbol':'1.2-4' }}</p>
-        <div class="symbol-change">
-          <p class="symbol">{{ cotacao.symbol }}</p>
-          <p class="change" [ngClass]="{
-              'positive': cotacao.change >= 0,
-              'negative': cotacao.change < 0
-            }">
-            {{ cotacao.change >= 0 ? '+' : '' }}{{ cotacao.change | percent:'1.2-2' }}
-          </p>
-        </div>
-      </div>
-    </div>
-    } @for (cotacao of cotacoes; track cotacao.symbol; let i = $index){
-    <div class="currency-card">
-      <img [src]="cotacao.icon" [alt]="'Ícone ' + cotacao.moeda" />
-      <div class="info">
-        <p class="price">{{ cotacao.preco | currency:'BRL':'symbol':'1.2-4' }}</p>
-        <div class="symbol-change">
-          <p class="symbol">{{ cotacao.symbol }}</p>
-          <p class="change" [ngClass]="{
-              'positive': cotacao.change >= 0,
-              'negative': cotacao.change < 0
-            }">
-            {{ cotacao.change >= 0 ? '+' : '' }}{{ cotacao.change | percent:'1.2-2' }}
-          </p>
-        </div>
-      </div>
-    </div>
+  <div class="currency-list-mobile">
+    @for (cotacao of cotacoesCarrossel; track $index) {
+      <app-currency-card [currency]="cotacao"></app-currency-card>
     }
   </div>
 </section>

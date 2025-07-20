@@ -1,113 +1,53 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface CurrencyData {
-  code: string;
-  codein: string;
-  name: string;
-  high: string;
-  low: string;
-  varBid: string;
-  pctChange: string;
-  bid: string;
-  ask: string;
-  timestamp: string;
-  create_date: string;
-}
-
-interface ApiResponse {
-  [key: string]: CurrencyData;
-}
-
-interface FormattedCurrency {
-  moeda: string;
-  preco: number;
-  icon: string;
-  symbol: string;
-  change: number;
-}
+import { CurrenciesService } from '../../services/currencies.service';
+import { ApiResponse, DisplayCurrency } from '../../models/currency.model';
+import { CurrencyCardComponent } from '../currency-card/currency-card.component';
 
 @Component({
   selector: 'app-currencies',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyCardComponent],
   templateUrl: './currencies.component.html',
   styleUrl: './currencies.component.scss',
 })
 export class CurrenciesComponent implements OnInit {
-  private apiData: ApiResponse = {
-    USDBRL: {
-      code: 'USD',
-      codein: 'BRL',
-      name: 'Dólar Americano/Real Brasileiro',
-      high: '5.627',
-      low: '5.51851',
-      varBid: '-0.02072',
-      pctChange: '-0.371485',
-      bid: '5.5569',
-      ask: '5.5599',
-      timestamp: '1752170054',
-      create_date: '2025-07-10 14:54:14',
-    },
-    EURBRL: {
-      code: 'EUR',
-      codein: 'BRL',
-      name: 'Euro/Real Brasileiro',
-      high: '6.57895',
-      low: '6.45161',
-      varBid: '-0.055207',
-      pctChange: '-0.843561',
-      bid: '6.48929',
-      ask: '6.50618',
-      timestamp: '1752169776',
-      create_date: '2025-07-10 14:49:36',
-    },
-    BTCBRL: {
-      code: 'BTC',
-      codein: 'BRL',
-      name: 'Bitcoin/Real Brasileiro',
-      high: '629334',
-      low: '597782',
-      varBid: '30945',
-      pctChange: '5.175',
-      bid: '628955',
-      ask: '628956',
-      timestamp: '1752170059',
-      create_date: '2025-07-10 14:54:19',
-    },
-    ETHBRL: {
-      code: 'ETH',
-      codein: 'BRL',
-      name: 'Ethereum/Real Brasileiro',
-      high: '15657.04',
-      low: '14564.32',
-      varBid: '1067.11',
-      pctChange: '7.321',
-      bid: '15638.63',
-      ask: '15639.3',
-      timestamp: '1752170061',
-      create_date: '2025-07-10 14:54:21',
-    },
-  };
+  // Lista para o grid do desktop (lista simples)
+  cotacoes: DisplayCurrency[] = [];
 
-  cotacoes: FormattedCurrency[] = [];
+  // Lista para o carrossel do mobile (lista duplicada)
+  cotacoesCarrossel: DisplayCurrency[] = [];
+
+  constructor(private currenciesService: CurrenciesService) {}
 
   ngOnInit(): void {
-    this.cotacoes = this.transformApiData(this.apiData);
-  }
+    this.currenciesService.getCurrencyQuotes().subscribe({
+      next: (apiData) => {
+        const singleList = this.transformApiData(apiData);
 
-  private transformApiData(data: ApiResponse): FormattedCurrency[] {
-    return Object.values(data).map((currency) => {
-      return {
-        moeda: currency.name.split('/')[0],
-        preco: parseFloat(currency.bid),
-        symbol: currency.code,
-        change: parseFloat(currency.pctChange) / 100,
-        icon: this.getCurrencyIcon(currency.code),
-      };
+        this.cotacoes = singleList;
+
+        this.cotacoesCarrossel = [...singleList, ...singleList];
+      },
+      error: (err) => {
+        console.error('Erro ao buscar cotações:', err);
+        this.cotacoes = [];
+        this.cotacoesCarrossel = [];
+      },
     });
   }
 
+  private transformApiData(data: ApiResponse): DisplayCurrency[] {
+    return Object.values(data).map((currencyFromApi) => {
+      return {
+        moeda: currencyFromApi.name.split('/')[0],
+        preco: currencyFromApi.bid,
+        symbol: currencyFromApi.code,
+        change: currencyFromApi.pctChange / 100,
+        icon: this.getCurrencyIcon(currencyFromApi.code),
+      };
+    });
+  }
 
   private getCurrencyIcon(code: string): string {
     const iconMap: { [key: string]: string } = {

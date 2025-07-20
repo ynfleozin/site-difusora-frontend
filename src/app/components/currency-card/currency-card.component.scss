@@ -1,0 +1,73 @@
+.currency-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #111111;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  min-width: 200px;
+  flex-shrink: 0;
+
+  img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+
+    .price {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    .symbol-change {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .symbol {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #646464;
+      margin: 0;
+    }
+
+    .change {
+      font-size: 0.85rem;
+      margin: 0;
+
+      &.positive {
+        color: green;
+      }
+
+      &.negative {
+        color: red;
+      }
+    }
+  }
+}
+
+// Mobile override — será aplicado via container pai
+@media (max-width: 768px) {
+  .currency-card {
+    justify-content: center;
+    min-width: 100px;
+    flex-shrink: 0;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .info {
+      .price {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
