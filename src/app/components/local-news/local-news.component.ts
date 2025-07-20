@@ -1,5 +1,3 @@
-// local-news.component.ts (Frontend)
-
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewsCardComponent } from '../news-card/news-card.component';
