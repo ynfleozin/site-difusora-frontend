@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { NewsArticle } from '../../models/news-article.model';
-import { ActivatedRoute } from '@angular/router';
-import { MOCK_NEWS } from '../../../../public/assets/mock-news';
+import { Component, inject, OnInit } from '@angular/core';
 import { DatePipe, CommonModule, Location } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { NewsArticle } from '../../models/news-article.model';
+import { NewsService } from '../../services/news.service';
+import { forkJoin, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-news',
@@ -13,23 +13,46 @@ import { RouterModule } from '@angular/router';
   styleUrl: './news.component.scss',
 })
 export class NewsComponent implements OnInit {
-  noticia?: NewsArticle;
-  outrasNoticias: NewsArticle[] = [];
+  news?: NewsArticle;
+  otherNews: NewsArticle[] = [];
 
-  constructor(private route: ActivatedRoute, private location: Location) {}
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+  private newsService = inject(NewsService);
 
   ngOnInit(): void {
-    const slug = this.route.snapshot.paramMap.get('slug');
+    this.route.paramMap
+      .pipe(
+        switchMap((params) => {
+          const slug = params.get('slug');
+          if (slug) {
+            return forkJoin({
+              mainArticle: this.newsService.getNewsBySlug(slug),
+              allNews: this.newsService.getAllNews(),
+            });
+          }
+          return forkJoin({ mainArticle: [], allNews: [] });
+        })
+      )
+      .subscribe({
+        next: (result) => {
+          this.news = result.mainArticle as NewsArticle;
 
-    if (slug) {
-      this.noticia = MOCK_NEWS.find((n) => n.slug === slug);
+          const others = (result.allNews as NewsArticle[]).filter(
+            (n) => n.slug !== this.news?.slug
+          );
 
-      const outras = MOCK_NEWS.filter((n) => n.slug !== slug);
-      this.outrasNoticias = this.shuffle(outras).slice(0, 3);
-    }
+          this.otherNews = this.shuffle(others).slice(0, 3);
+
+          window.scrollTo(0, 0);
+        },
+        error: (err) => {
+          console.error('Erro ao buscar a notícia:', err);
+        },
+      });
   }
 
-  goBack() {
+  goBack(): void {
     this.location.back();
   }
 
@@ -37,17 +60,22 @@ export class NewsComponent implements OnInit {
     return [...array].sort(() => Math.random() - 0.5);
   }
 
-  shareWhatsApp() {
+  shareWhatsApp(): void {
     const url = window.location.href;
+    const text = `Confira esta notícia: ${this.news?.title}`;
     window.open(
-      `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`,
+      `https://api.whatsapp.com/send?text=${encodeURIComponent(
+        text + ' ' + url
+      )}`,
       '_blank'
     );
   }
 
-  copyLink() {
-    navigator.clipboard.writeText(window.location.href);
-    alert('Link copiado para a área de transferência!');
+  copyLink(): void {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => alert('Link copiado para a área de transferência!'))
+      .catch((err) => console.error('Falha ao copiar o link:', err));
   }
 
   onImageError(event: Event): void {

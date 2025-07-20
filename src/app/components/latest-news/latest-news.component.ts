@@ -1,41 +1,38 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { NewsArticle } from '../../models/news-article.model';
-import { MOCK_NEWS } from '../../../../public/assets/mock-news';
+import { Component, inject, OnChanges, OnInit } from '@angular/core';
 import { NewsCardComponent } from '../news-card/news-card.component';
+import { NewsArticle } from '../../models/news-article.model';
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-latest-news',
   standalone: true,
   imports: [NewsCardComponent],
   templateUrl: './latest-news.component.html',
-  styleUrl: './latest-news.component.scss'
+  styleUrl: './latest-news.component.scss',
 })
-export class LatestNewsComponent implements OnChanges, OnInit{
-  @Input() allNews: NewsArticle[] = [];
-  
-    latestNews: NewsArticle[] = [];
+export class LatestNewsComponent implements OnInit {
+  latestNews: NewsArticle[] = [];
 
-  
-    ngOnInit(): void {
-      this.allNews = MOCK_NEWS;
-      this.processNews();
-    }
-  
-    // Processa os dados
-    ngOnChanges(changes: SimpleChanges): void {
-      if (changes['allNews'] && this.allNews.length > 0) {
-        this.processNews();
-      }
-    }
-  
-    private processNews(): void {
-      // Ordena por ordem de postagem
-      const sortedNews = [...this.allNews].sort(
-        (a, b) =>
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      );
-  
-      // Pega as 5 primeiras notícias
-      this.latestNews = sortedNews.slice(0, 6);
-    }
+  private newsService = inject(NewsService);
+
+  ngOnInit(): void {
+    this.newsService.getAllNews().subscribe({
+      next: (newsFromApi) => {
+        this.processNews(newsFromApi);
+      },
+      error: (err) => {
+        console.error('Erro ao buscar notícias:', err);
+        this.latestNews = [];
+      },
+    });
+  }
+
+  private processNews(allNews: NewsArticle[]): void {
+    const sortedNews = [...allNews].sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+
+    this.latestNews = sortedNews.slice(0, 6);
+  }
 }

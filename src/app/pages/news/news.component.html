@@ -2,35 +2,35 @@
   <button class="back-button" (click)="goBack()">← Voltar</button>
 
   <div class="news-header">
-    <h1 class="news-title">{{ noticia?.title }}</h1>
+    <h1 class="news-title">{{ news?.title }}</h1>
 
     <div class="news-meta">
       <span
         ><i class="fa-solid fa-user"></i>
-        {{ noticia?.author ? noticia?.author : noticia?.sourceName }}</span
+        {{ news?.author ? news?.author : news?.sourceName }}</span
       >
       <span
         ><i class="fa-solid fa-clock"></i>
-        {{ noticia?.publishedAt | date : "dd/MM/yyyy HH:mm" }}</span
+        {{ news?.publishedAt | date : "dd/MM/yyyy HH:mm" }}</span
       >
     </div>
   </div>
 
   <div class="news-image-wrapper">
     <img
-      [src]="noticia?.imageUrl"
+      [src]="news?.imageUrl"
       alt="Imagem da notícia"
       (error)="onImageError($event)"
     />
   </div>
 
-  <div class="news-content" [innerHTML]="noticia?.contentHTML"></div>
+  <div class="news-content" [innerHTML]="news?.contentHTML"></div>
 
   <p class="news-source">
-    Fonte: <span>{{ noticia?.sourceName }}</span>
+    Fonte: <span>{{ news?.sourceName }}</span>
   </p>
 
-  <a class="full-article-button" [href]="noticia?.sourceUrl" target="_blank">
+  <a class="full-article-button" [href]="news?.sourceUrl" target="_blank">
     Ler notícia na íntegra
   </a>
 
@@ -45,7 +45,7 @@
   <div class="related-news">
     <h3>Outras notícias</h3>
     <div class="related-grid">
-      @for (related of outrasNoticias; track related.slug) {
+      @for (related of otherNews; track related.slug) {
       <div class="related-card">
         <img
           [src]="related.imageUrl || ''"
