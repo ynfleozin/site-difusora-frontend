@@ -1,7 +1,7 @@
 export interface NewsArticle {
   title: string;
   description: string;
-  contentHTML: string;
+  body: string;
   sourceUrl: string;
   sourceName: string;
   publishedAt: string;
