@@ -4,6 +4,8 @@ import { NewsComponent } from './pages/news/news.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { FilteredNewsComponent } from './pages/filtered-news/filtered-news.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { LoginComponent } from './pages/login/login.component';
+import { authGuard } from './services/auth.guard';
 
 export const routes: Routes = [
   {
@@ -23,9 +25,15 @@ export const routes: Routes = [
     title: 'Difusora Colatina',
   },
   {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login - Painel de Controle',
+  },
+  {
     path: 'admin',
     component: AdminComponent,
     title: 'Painel de Controle',
+    canActivate: [authGuard],
   },
   {
     path: '**',

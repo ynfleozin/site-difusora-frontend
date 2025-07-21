@@ -1,0 +1,25 @@
+<section class="login-section">
+  <div class="form-container">
+    <h2>Acesso Restrito</h2>
+    <p>
+      Por favor, insira suas credenciais para acessar o Painel Administrativo.
+    </p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <label for="username">Usuário</label>
+        <input id="username" type="text" formControlName="username" />
+      </div>
+      <div class="form-field">
+        <label for="password">Senha</label>
+        <input id="password" type="password" formControlName="password" />
+      </div>
+
+      @if (loginError) {
+      <p class="error-message">Usuário ou senha inválidos. Tente novamente.</p>
+      }
+
+      <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+    </form>
+  </div>
+</section>
