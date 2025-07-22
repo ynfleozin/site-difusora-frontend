@@ -7,14 +7,35 @@
     <img src="assets/imgs/BannerDifusora.jpg" alt="Banner Difusora" />
   </picture>
 </section>
+
 <app-currencies />
+
+@if (adBanner1()) {
+<app-ad-banner-horizontal
+  [imageUrl]="adBanner1()?.imageUrl || ''"
+  [linkUrl]="adBanner1()?.linkUrl || '#'"
+  [altText]="adBanner1()?.altText || 'Anúncio 1'"
+/>
+} @else {
 <app-ad-banner-horizontal
   imageUrl="assets/imgs/ad-banner.jpg"
   altText="Anúncio"
 />
+}
+
 <app-local-news />
+
+@if (adBanner2()) {
+<app-ad-banner-horizontal
+  [imageUrl]="adBanner2()?.imageUrl || ''"
+  [linkUrl]="adBanner2()?.linkUrl || '#'"
+  [altText]="adBanner2()?.altText || 'Anúncio 2'"
+/>
+} @else {
 <app-ad-banner-horizontal
   imageUrl="assets/imgs/ad-banner.jpg"
   altText="Anúncio"
 />
+}
+
 <app-latest-news />

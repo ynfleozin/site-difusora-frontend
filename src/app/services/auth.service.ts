@@ -1,59 +1,89 @@
-import {
-  Injectable,
-  inject,
-  signal,
-  WritableSignal,
-  PLATFORM_ID,
-} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment-development';
+
+interface DecodedToken {
+  exp: number;
+  iat: number;
+  [key: string]: any;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3001/api/auth';
-  private http = inject(HttpClient);
-  private router = inject(Router);
-
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
+  private http = inject(HttpClient);
 
-  public isAuthenticated: WritableSignal<boolean> = signal(false);
+  constructor() {}
 
-  constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        this.isAuthenticated.set(true);
-      }
-    }
-  }
-
-  login(user: string, pass: string): Observable<boolean> {
+  login(username: string, password: string): Observable<{ token: string }> {
+    const loginUrl = `${environment.apiUrl}/auth/login`;
     return this.http
-      .post<{ token: string }>(`${this.apiUrl}/login`, {
-        username: user,
-        password: pass,
-      })
+      .post<{ token: string }>(loginUrl, { username, password })
       .pipe(
         tap((response) => {
-          if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem('authToken', response.token);
-            this.isAuthenticated.set(true);
-          }
-        }),
-        map(() => true),
-        catchError(() => of(false))
+          this.saveToken(response.token);
+        })
       );
   }
 
-  logout(): void {
+  saveToken(token: string): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('authToken', token);
+    }
+  }
+
+  getToken(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('authToken');
+    }
+    return null;
+  }
+
+  removeToken(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('authToken');
-      this.isAuthenticated.set(false);
-      this.router.navigate(['/']);
+    }
+  }
+
+  isAuthenticated(): boolean {
+    if (!isPlatformBrowser(this.platformId)) {
+      return false;
+    }
+
+    const token = this.getToken();
+
+    if (!token) {
+      console.log('AuthService: Nenhum token encontrado.');
+      return false;
+    }
+
+    try {
+      const decoded: DecodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+
+      if (decoded.exp < currentTime) {
+        console.warn('AuthService: Token JWT expirado. Removendo token.');
+        this.removeToken();
+        return false;
+      }
+
+      console.log('AuthService: Token válido.');
+      return true;
+    } catch (error) {
+      console.error(
+        'AuthService: Erro ao decodificar token JWT. Removendo token.',
+        error
+      );
+      this.removeToken();
+      return false;
     }
   }
 }

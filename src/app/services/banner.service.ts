@@ -1,36 +1,24 @@
+// banner.service.ts (modificado)
 import { Banner } from './../models/banner.model';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment-development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BannerService {
-  constructor() {}
+  private apiUrl = environment.apiUrl + '/banners';
+
+  constructor(private http: HttpClient) {}
 
   getBanners(): Observable<Banner[]> {
-    const mockBanners: Banner[] = [
-      {
-        id: 'home-main',
-        name: 'Banner Principal da Home',
-        imageUrl: 'assets/imgs/BannerDifusora.jpg',
-      },
-      {
-        id: 'ad-banner-1',
-        name: 'Banner Horizontal (após cotações)',
-        imageUrl: 'assets/imgs/ad-banner.jpg',
-      },
-      {
-        id: 'ad-banner-2',
-        name: 'Banner Horizontal (após notícias locais)',
-        imageUrl: 'assets/imgs/ad-banner.jpg',
-      },
-    ];
-    return of(mockBanners);
+    return this.http.get<Banner[]>(this.apiUrl);
   }
 
   updateBannerImage(id: string, newImageUrl: string): Observable<any> {
-    console.log(`Atualizando banner ${id} com a nova imagem ${newImageUrl}`);
-    return of({ sucess: true, bannerId: id, newUrl: newImageUrl });
+    const body = { imageUrl: newImageUrl };
+    return this.http.put(`${this.apiUrl}/${id}`, body);
   }
 }
