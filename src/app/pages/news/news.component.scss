@@ -65,7 +65,8 @@
       margin-bottom: 1.2rem;
     }
 
-    ul, ol {
+    ul,
+    ol {
       margin: 1rem 0 1.5rem 2rem;
       padding-left: 1rem;
     }
@@ -173,31 +174,7 @@
       @media (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
       }
-
-      .related-card {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 0.75rem;
-        text-align: center;
-
-        img {
-          width: 100%;
-          height: auto;
-          border-radius: 8px;
-          margin-bottom: 0.5rem;
-        }
-
-        .related-title {
-          font-weight: 600;
-          font-size: 1rem;
-          margin-bottom: 0.5rem;
-        }
-
-        a {
-          color: #cf0101;
-          font-size: 0.9rem;
-        }
-      }
     }
   }
+
 }

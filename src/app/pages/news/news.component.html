@@ -45,17 +45,17 @@
   <div class="related-news">
     <h3>Outras notícias</h3>
     <div class="related-grid">
-      @for (related of otherNews; track related.slug) {
-      <div class="related-card">
-        <img
-          [src]="related.imageUrl || ''"
-          alt="Imagem relacionada"
-          (error)="onImageError($event)"
+      <div class="related-grid">
+        @for (related of otherNews; track related.slug) {
+        <app-news-card
+          [category]="related.category"
+          [title]="related.title"
+          [imageUrl]="related.imageUrl"
+          [isFeatured]="false"
+          [slug]="related.slug"
         />
-        <p class="related-title">{{ related.title }}</p>
-        <a [routerLink]="['/noticia', related.slug]">Ler mais</a>
+        }
       </div>
-      }
     </div>
   </div>
 </div>

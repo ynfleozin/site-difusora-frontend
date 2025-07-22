@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { NewsArticle } from '../../models/news-article.model';
 import { NewsService } from '../../services/news.service';
 import { forkJoin, switchMap } from 'rxjs';
+import { NewsCardComponent } from '../../components/news-card/news-card.component';
 
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterModule],
+  imports: [CommonModule, DatePipe, RouterModule, NewsCardComponent],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
 })
