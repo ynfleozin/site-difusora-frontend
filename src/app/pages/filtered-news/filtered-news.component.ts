@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NewsArticle } from '../../models/news-article.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { NewsService } from '../../services/news.service';
 import { CommonModule } from '@angular/common';
@@ -29,9 +29,10 @@ export class FilteredNewsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSubscription = this.route.paramMap.subscribe((params) => {
-      this.categoryName = params.get('categoryName');
-      if (this.categoryName) {
-        this.loadNewsByCategory(this.categoryName);
+      const category = params.get('categoryName');
+      if (category) {
+        this.categoryName = category;
+        this.loadNews(category);
       } else {
         this.error = 'Categoria não especificada na URL.';
         this.isLoading = false;
@@ -39,27 +40,33 @@ export class FilteredNewsComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadNewsByCategory(category: string): void {
+  loadNews(category: string): void {
     this.isLoading = true;
     this.error = null;
-    this.newsSubscription = this.newsService
-      .getNewsByCategory(category)
-      .subscribe({
-        next: (news) => {
-          this.filteredNews = news;
-          this.isLoading = false;
+    let newsObservable: Observable<NewsArticle[]>;
 
-          if(news && news.length > 0){
-            this.categoryName = news[0].category;
-          }
-        },
-        error: (err) => {
-          console.error('Erro ao carregar notícias por categoria.', err);
-          this.error =
-            'Não foi possível carregar as notícias para esta categoria. Tente novamente.';
-          this.isLoading = false;
-        },
-      });
+    if (category.toLowerCase() === 'local') {
+      this.categoryName = 'Local';
+      newsObservable = this.newsService.getLocalNews();
+    } else {
+      newsObservable = this.newsService.getNewsByCategory(category);
+    }
+
+    this.newsSubscription = newsObservable.subscribe({
+      next: (news) => {
+        this.filteredNews = news;
+        this.isLoading = false;
+
+        if (category.toLowerCase() !== 'local' && news && news.length > 0) {
+          this.categoryName = news[0].category;
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar notícias.', err);
+        this.error = 'Não foi possível carregar as notícias. Tente novamente.';
+        this.isLoading = false;
+      },
+    });
   }
 
   ngOnDestroy(): void {

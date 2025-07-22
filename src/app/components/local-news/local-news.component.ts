@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { NewsCardComponent } from '../news-card/news-card.component';
 import { NewsService } from '../../services/news.service';
 import { NewsArticle } from '../../models/news-article.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-local-news',
   standalone: true,
-  imports: [CommonModule, NewsCardComponent],
+  imports: [CommonModule, NewsCardComponent, RouterModule],
   templateUrl: './local-news.component.html',
   styleUrls: ['./local-news.component.scss'],
 })
