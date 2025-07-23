@@ -3,7 +3,7 @@ import { DatePipe, CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { NewsArticle } from '../../models/news-article.model';
 import { NewsService } from '../../services/news.service';
-import { forkJoin, switchMap, finalize } from 'rxjs'; // Importe 'finalize'
+import { forkJoin, switchMap, finalize } from 'rxjs';
 import { NewsCardComponent } from '../../components/news-card/news-card.component';
 
 @Component({
