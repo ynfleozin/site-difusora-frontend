@@ -45,17 +45,15 @@
   <div class="related-news">
     <h3>Outras notícias</h3>
     <div class="related-grid">
-      <div class="related-grid">
-        @for (related of otherNews; track related.slug) {
-        <app-news-card
-          [category]="related.category"
-          [title]="related.title"
-          [imageUrl]="related.imageUrl"
-          [isFeatured]="false"
-          [slug]="related.slug"
-        />
-        }
-      </div>
+      @for (related of otherNews; track related.slug) {
+      <app-news-card
+        [category]="related.category"
+        [title]="related.title"
+        [imageUrl]="related.imageUrl"
+        [isFeatured]="false"
+        [slug]="related.slug"
+      />
+      }
     </div>
   </div>
 </div>
