@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+// Importe o HostBinding
+import { Component, OnDestroy, OnInit, HostBinding } from '@angular/core';
 import { NewsArticle } from '../../models/news-article.model';
 import { Subscription, Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NewsService } from '../../services/news.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { NewsCardComponent } from '../../components/news-card/news-card.component';
 
 @Component({
@@ -14,6 +15,10 @@ import { NewsCardComponent } from '../../components/news-card/news-card.componen
   styleUrl: './filtered-news.component.scss',
 })
 export class FilteredNewsComponent implements OnInit, OnDestroy {
+  @HostBinding('class.is-loading') get loadingClass() {
+    return this.isLoading;
+  }
+
   categoryName: string | null = null;
   filteredNews: NewsArticle[] = [];
   isLoading: boolean = true;
@@ -22,44 +27,60 @@ export class FilteredNewsComponent implements OnInit, OnDestroy {
   private routeSubscription: Subscription | undefined;
   private newsSubscription: Subscription | undefined;
 
+  private categoryDisplayNames: { [key: string]: string } = {
+    cultura: 'Cultura',
+    'direitos-humanos': 'Direitos Humanos',
+    economia: 'Economia',
+    educacao: 'Educação',
+    esportes: 'Esportes',
+    geral: 'Geral',
+    internacional: 'Internacional',
+    justica: 'Justiça',
+    'meio-ambiente': 'Meio Ambiente',
+    politica: 'Política',
+    saude: 'Saúde',
+    local: 'Local',
+  };
+
   constructor(
     private route: ActivatedRoute,
-    private newsService: NewsService
+    private newsService: NewsService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     this.routeSubscription = this.route.paramMap.subscribe((params) => {
-      const category = params.get('categoryName');
-      if (category) {
-        this.categoryName = category;
-        this.loadNews(category);
+      const categorySlug = params.get('categoryName');
+      this.isLoading = true;
+      this.filteredNews = [];
+      this.error = null;
+
+      if (categorySlug) {
+        this.categoryName =
+          this.categoryDisplayNames[categorySlug.toLowerCase()] ||
+          this.capitalizeFirstLetter(categorySlug);
+        this.loadNews(categorySlug);
       } else {
         this.error = 'Categoria não especificada na URL.';
         this.isLoading = false;
+        this.categoryName = 'Categoria Desconhecida';
       }
     });
   }
 
-  loadNews(category: string): void {
-    this.isLoading = true;
-    this.error = null;
+  loadNews(categorySlug: string): void {
     let newsObservable: Observable<NewsArticle[]>;
 
-    if (category.toLowerCase() === 'local') {
-      this.categoryName = 'Local';
+    if (categorySlug.toLowerCase() === 'local') {
       newsObservable = this.newsService.getLocalNews();
     } else {
-      newsObservable = this.newsService.getNewsByCategory(category);
+      newsObservable = this.newsService.getNewsByCategory(categorySlug);
     }
 
     this.newsSubscription = newsObservable.subscribe({
       next: (news) => {
         this.filteredNews = news;
         this.isLoading = false;
-
-        if (category.toLowerCase() !== 'local' && news && news.length > 0) {
-          this.categoryName = news[0].category;
-        }
       },
       error: (err) => {
         console.error('Erro ao carregar notícias.', err);
@@ -76,5 +97,13 @@ export class FilteredNewsComponent implements OnInit, OnDestroy {
     if (this.newsSubscription) {
       this.newsSubscription.unsubscribe();
     }
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  private capitalizeFirstLetter(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1).replace(/-/g, ' ');
   }
 }
