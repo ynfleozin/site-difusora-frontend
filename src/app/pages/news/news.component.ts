@@ -3,7 +3,7 @@ import { DatePipe, CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { NewsArticle } from '../../models/news-article.model';
 import { NewsService } from '../../services/news.service';
-import { forkJoin, switchMap } from 'rxjs';
+import { forkJoin, switchMap, finalize } from 'rxjs'; // Importe 'finalize'
 import { NewsCardComponent } from '../../components/news-card/news-card.component';
 
 @Component({
@@ -26,6 +26,8 @@ export class NewsComponent implements OnInit {
       .pipe(
         switchMap((params) => {
           const slug = params.get('slug');
+          this.news = undefined;
+
           if (slug) {
             return forkJoin({
               mainArticle: this.newsService.getNewsBySlug(slug),
@@ -49,6 +51,7 @@ export class NewsComponent implements OnInit {
         },
         error: (err) => {
           console.error('Erro ao buscar a notícia:', err);
+          this.news = undefined;
         },
       });
   }
