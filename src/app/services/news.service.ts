@@ -3,12 +3,13 @@ import { Observable, of } from 'rxjs';
 import { NewsArticle } from '../models/news-article.model';
 import { LocalNews } from '../models/local-news.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment-development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewsService {
-  private readonly apiUrl = 'http://localhost:3001/api/news';
+  private readonly apiUrl = environment.apiUrl + '/news';
 
   private http = inject(HttpClient);
 
