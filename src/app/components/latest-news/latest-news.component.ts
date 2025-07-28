@@ -1,4 +1,4 @@
-import { Component, inject, OnChanges, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NewsCardComponent } from '../news-card/news-card.component';
 import { NewsArticle } from '../../models/news-article.model';
 import { NewsService } from '../../services/news.service';
@@ -28,11 +28,6 @@ export class LatestNewsComponent implements OnInit {
   }
 
   private processNews(allNews: NewsArticle[]): void {
-    const sortedNews = [...allNews].sort(
-      (a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
-
-    this.latestNews = sortedNews.slice(0, 6);
+    this.latestNews = allNews.slice(0, 6);
   }
 }
