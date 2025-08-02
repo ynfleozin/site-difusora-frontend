@@ -11,13 +11,32 @@ import { RouterModule } from '@angular/router';
 })
 export class NewsCardComponent {
   @Input() title!: string;
-  @Input() description!: string
+  @Input() description!: string;
   @Input() imageUrl!: string;
   @Input() category!: string;
   @Input() sourceUrl!: string;
   @Input() sourceName!: string;
   @Input() isFeatured: boolean = false;
   @Input() slug!: string;
+
+  CATEGORY_LABEL: Record<string, string> = {
+    cultura: 'Cultura',
+    'direitos-humanos': 'Direitos Humanos',
+    economia: 'Economia',
+    educacao: 'Educação',
+    esportes: 'Esportes',
+    geral: 'Geral',
+    internacional: 'Internacional',
+    justica: 'Justiça',
+    'meio-ambiente': 'Meio Ambiente',
+    politica: 'Política',
+    saude: 'Saúde',
+    local: 'Local',
+  };
+
+  get categoryLabel(): string {
+    return this.CATEGORY_LABEL[this.category.toLowerCase()] ?? this.category;
+  }
 
   onImageError(event: Event) {
     const target = event.target as HTMLImageElement;
