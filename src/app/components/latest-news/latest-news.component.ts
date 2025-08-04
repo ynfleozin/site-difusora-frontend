@@ -16,7 +16,7 @@ export class LatestNewsComponent implements OnInit {
   private newsService = inject(NewsService);
 
   ngOnInit(): void {
-    this.newsService.getAllNews().subscribe({
+    this.newsService.getLatestNews().subscribe({
       next: (newsFromApi) => {
         this.processNews(newsFromApi);
       },

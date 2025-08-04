@@ -1,0 +1,35 @@
+.weather-container {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 15px;
+
+  .weather-img {
+    display: flex;
+
+    img {
+      width: 100px;
+    }
+  }
+
+  .weather-infos {
+    display: flex;
+    flex-direction: column;
+
+    #location {
+      font-size: 1.25rem;
+    }
+
+    #temperature {
+      font-size: 2rem;
+    }
+
+    #condition {
+      font-size: 1rem;
+    }
+  }
+}

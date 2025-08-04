@@ -32,6 +32,10 @@ export class NewsService {
     return this.http.get<NewsArticle[]>(this.apiUrl);
   }
 
+  getLatestNews(): Observable<NewsArticle[]> {
+    return this.http.get<NewsArticle[]>(`${this.apiUrl}/latest`)
+  }
+
   getNewsBySlug(slug: string): Observable<NewsArticle> {
     return this.http.get<NewsArticle>(`${this.apiUrl}/${slug}`);
   }

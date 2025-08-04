@@ -13,6 +13,7 @@ import { AdBannerHorizontalComponent } from '../../components/ad-banner-horizont
 import { LatestNewsComponent } from '../../components/latest-news/latest-news.component';
 import { BannerService } from '../../services/banner.service';
 import { Banner } from '../../models/banner.model';
+import { WeatherComponent } from "../../components/weather/weather.component";
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,8 @@ import { Banner } from '../../models/banner.model';
     LocalNewsComponent,
     AdBannerHorizontalComponent,
     LatestNewsComponent,
-  ],
+    WeatherComponent
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
