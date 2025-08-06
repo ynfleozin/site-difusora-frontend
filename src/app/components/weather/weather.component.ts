@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { WeatherService } from '../../services/weather.service';
 import { Weather } from '../../models/weather.model';
+import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-weather',
   standalone: true,
-  imports: [],
+  imports: [CapitalizePipe],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.scss',
 })
