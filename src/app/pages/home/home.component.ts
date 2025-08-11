@@ -14,6 +14,7 @@ import { LatestNewsComponent } from '../../components/latest-news/latest-news.co
 import { BannerService } from '../../services/banner.service';
 import { Banner } from '../../models/banner.model';
 import { WeatherComponent } from "../../components/weather/weather.component";
+import { CoffeeQuoteComponent } from "../../components/coffee-quote/coffee-quote.component";
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,8 @@ import { WeatherComponent } from "../../components/weather/weather.component";
     LocalNewsComponent,
     AdBannerHorizontalComponent,
     LatestNewsComponent,
-    WeatherComponent
+    WeatherComponent,
+    CoffeeQuoteComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

@@ -1,0 +1,55 @@
+<section class="coffee-section">
+  <h2>Cotação do Café</h2>
+
+  @if (latestQuoteData) {
+  <div class="c-container">
+    <div class="current-day">
+      <h3>{{ latestQuoteData.quote.day }} AGO 2025</h3>
+    </div>
+    <div class="c-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Valor (R$)</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (arabica of latestQuoteData.quote.arabica; track $index) {
+          <tr>
+            @if ($index === 0) {
+            <td [attr.rowspan]="latestQuoteData.quote.arabica.length">
+              Arábica
+            </td>
+            }
+            <td>{{ arabica.description }}</td>
+            @if (arabica.value !== null) {
+            <td>R$ {{ arabica.value }}</td>
+            } @else {
+            <td>—</td>
+            }
+          </tr>
+          } @for (conilon of latestQuoteData.quote.conilon; track $index) {
+          <tr>
+            @if ($index === 0) {
+            <td [attr.rowspan]="latestQuoteData.quote.conilon.length">
+              Conilon
+            </td>
+            }
+            <td>{{ conilon.description }}</td>
+            @if (conilon.value !== null) {
+            <td>R$ {{ conilon.value }}</td>
+            } @else {
+            <td>—</td>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  } @else {
+  <p>Nenhuma cotação de café disponível no momento.</p>
+  }
+</section>
