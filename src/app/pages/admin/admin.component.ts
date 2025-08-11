@@ -2,6 +2,7 @@ import {
   Component,
   inject,
   OnInit,
+  OnDestroy,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -15,22 +16,31 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { Editor } from 'ngx-editor';
+import { NgxEditorModule } from 'ngx-editor';
+import { HttpClient } from '@angular/common/http';
+import { switchMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxEditorModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
   private newsService = inject(NewsService);
   private bannerService = inject(BannerService);
+  private http = inject(HttpClient);
 
   public banners: WritableSignal<Banner[]> = signal([]);
   public newsForm: FormGroup;
+  public editor: Editor;
+
+  private selectedFile: File | null = null;
 
   constructor() {
+    this.editor = new Editor();
     this.newsForm = new FormGroup({
       title: new FormControl('', [
         Validators.required,
@@ -38,13 +48,16 @@ export class AdminComponent implements OnInit {
       ]),
       category: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      imageUrl: new FormControl('', Validators.required),
       body: new FormControl('', Validators.required),
     });
   }
 
   ngOnInit(): void {
     this.loadBanners();
+  }
+
+  ngOnDestroy(): void {
+    this.editor.destroy();
   }
 
   loadBanners(): void {
@@ -59,25 +72,106 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      console.log('Arquivo selectionado:', this.selectedFile.name);
+    }
+  }
+
+  onBannerFileSelected(event: Event, bannerID: string): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+
+    const cloudName = 'dek2l41ss';
+    const uploadPreset = 'portal-noticias';
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', uploadPreset);
+
+    this.http.post<any>(url, formData).subscribe({
+      next: (uploadResponse) => {
+        const imageUrl = uploadResponse.secure_url;
+
+        this.bannerService.updateBannerImage(bannerID, imageUrl).subscribe({
+          next: () => {
+            alert(`Banner ${bannerID} atualizado com sucesso!`);
+            this.loadBanners();
+          },
+          error: (err) => {
+            console.error(err);
+            alert('Falha ao atualizar o banner.');
+          },
+        });
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Falha no upload da imagem.');
+      },
+    });
+  }
+
   onSubmitNews(): void {
     if (this.newsForm.invalid) {
-      alert('Por favor, preencha o formulário corretamente.');
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+    if (!this.selectedFile) {
+      alert('Por favor, selecione uma imagem para a notícia.');
       return;
     }
 
-    const slug = this.newsForm.value.title.toLowerCase().replace(/\s+/g, '-');
-    const newsData = { ...this.newsForm.value, slug, publishedAt: new Date() };
+    this.newsForm.disable();
 
-    this.newsService.addNews(newsData).subscribe({
-      next: () => {
-        alert('Notícia adicionada com sucesso!');
-        this.newsForm.reset();
-      },
-      error: (err) => {
-        alert('Falha ao adicionar notícia');
-        console.error(err);
-      },
-    });
+    const cloudName = 'dek2l41ss';
+    const uploadPreset = 'portal-noticias';
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('upload_preset', uploadPreset);
+
+    this.http
+      .post<any>(url, formData)
+      .pipe(
+        switchMap((uploadResponse) => {
+          const imageUrl = uploadResponse.secure_url;
+          const slug = this.newsForm.value.title
+            .toLowerCase()
+            .replace(/\s+/g, '-');
+          const newsData = {
+            ...this.newsForm.value,
+            slug,
+            imageUrl,
+            publishedAt: new Date(),
+          };
+          return this.newsService.addNews(newsData);
+        })
+      )
+      .subscribe({
+        next: () => {
+          alert('Notícia adicionada com sucesso!');
+          this.newsForm.reset();
+          this.selectedFile = null;
+          const fileInput = document.getElementById(
+            'imageFile'
+          ) as HTMLInputElement;
+          if (fileInput) fileInput.value = '';
+          this.newsForm.enable();
+        },
+        error: (err) => {
+          alert(
+            'Falha ao adicionar notícia. Verifique o console para mais detalhes.'
+          );
+          console.error(err);
+          this.newsForm.enable();
+        },
+      });
   }
 
   onUpdateBanner(bannerID: string, inputElement: HTMLInputElement): void {

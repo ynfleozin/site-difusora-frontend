@@ -5,25 +5,44 @@
     <h3>Adicionar Nova Notícia</h3>
     <form [formGroup]="newsForm" (ngSubmit)="onSubmitNews()">
       <div class="form-field">
-        <label for="title">Título</label>
-        <input id="title" type="text" formControlName="title" />
+                <label for="title">Título</label>        
+        <input id="title" type="text" formControlName="title" />      
       </div>
+           
       <div class="form-field">
-        <label for="category">Categoria</label>
-        <input id="category" type="text" formControlName="category" />
+                <label for="category">Categoria</label>        
+        <input id="category" type="text" formControlName="category" />      
       </div>
+           
       <div class="form-field">
-        <label for="description">Descrição</label>
-        <textarea id="description" formControlName="description"></textarea>
+                <label for="description">Descrição</label>        
+        <textarea id="description" formControlName="description"></textarea>    
+         
       </div>
+
       <div class="form-field">
         <label for="body">Corpo da Notícia</label>
-        <textarea id="body" formControlName="body" rows="10"></textarea>
+        <div class="NgxEditor__Wrapper">
+          <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+          <ngx-editor
+            [editor]="editor"
+            id="body"
+            formControlName="body"
+            [placeholder]="'Escreva a notícia aqui...'"
+          ></ngx-editor>
+        </div>
       </div>
+
       <div class="form-field">
-        <label for="imageUrl">URL da Imagem</label>
-        <input id="imageUrl" type="text" formControlName="imageUrl" />
+        <label for="imageFile">Imagem da Notícia</label>
+        <input
+          id="imageFile"
+          type="file"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+        />
       </div>
+
       <button type="submit" [disabled]="newsForm.invalid">
         Adicionar Notícia
       </button>
@@ -46,11 +65,13 @@
       />
 
       <div class="form-field">
-        <label for="banner-{{ banner.id }}">Nova URL da Imagem</label>
-        <input type="text" id="banner-{{ banner.id }}" #newUrlInput />
-        <button (click)="onUpdateBanner(banner.id, newUrlInput)">
-          Atualizar Banner
-        </button>
+        <label for="bannerFile-{{ banner.id }}">Enviar nova imagem</label>
+        <input
+          id="bannerFile-{{ banner.id }}"
+          type="file"
+          accept="image/*"
+          (change)="onBannerFileSelected($event, banner.id)"
+        />
       </div>
     </div>
     } @empty {
