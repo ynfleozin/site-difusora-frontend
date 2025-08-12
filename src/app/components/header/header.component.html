@@ -4,7 +4,9 @@
       <nav>
         <ul class="nav-links">
           <li class="nav-link"><a href="">Início</a></li>
-          <li class="nav-link"><a (click)="scrollToSection('latest-news')">Últimas Notícias</a></li>
+          <li class="nav-link">
+            <a (click)="scrollToSection('latest-news')">Últimas Notícias</a>
+          </li>
           <li class="nav-link dropdown">
             <a (click)="toggleCategories('desktop')">Categorias</a>
             <ul class="dropdown-menu" [class.show]="showDesktopCategories">
@@ -24,6 +26,7 @@
             </ul>
           </li>
           <li class="nav-link"><a (click)="openPlayer()">Ouça agora</a></li>
+          <li class="nav-link"><a href="/assista-ao-vivo">Assista ao vivo</a></li>
         </ul>
       </nav>
     </div>
@@ -46,7 +49,9 @@
     <div #menuOverlay class="mobile-menu-overlay">
       <ul #mobileLinks class="mobile-links">
         <li><a href="/">Início</a></li>
-        <li><a (click)="scrollToSection('latest-news')">Últimas Notícias</a></li>
+        <li>
+          <a (click)="scrollToSection('latest-news')">Últimas Notícias</a>
+        </li>
         <li><a (click)="openPlayer()">Ouça Agora</a></li>
         <li class="dropdown-mobile">
           <a
@@ -71,6 +76,7 @@
             <li><a href="/categorias/meio-ambiente">Meio Ambiente</a></li>
             <li><a href="/categorias/politica">Política</a></li>
             <li><a href="/categorias/saude">Saúde</a></li>
+            <li class="nav-link"><a routerLink="/assista-ao-vivo">Assista ao vivo</a></li>
           </ul>
         </li>
       </ul>

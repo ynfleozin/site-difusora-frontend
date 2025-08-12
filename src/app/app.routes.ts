@@ -6,6 +6,7 @@ import { FilteredNewsComponent } from './pages/filtered-news/filtered-news.compo
 import { AdminComponent } from './pages/admin/admin.component';
 import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './services/auth.guard';
+import { LiveStreamComponent } from './pages/live-stream/live-stream.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,11 @@ export const routes: Routes = [
     path: 'categorias/:categoryName',
     component: FilteredNewsComponent,
     title: 'Difusora Colatina',
+  },
+  {
+    path: 'assista-ao-vivo',
+    component: LiveStreamComponent,
+    title: 'Assista ao vivo - Difusora Colatina',
   },
   {
     path: 'login',

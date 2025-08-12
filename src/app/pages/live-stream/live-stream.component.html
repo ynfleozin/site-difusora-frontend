@@ -1,0 +1,19 @@
+<div class="live-page">
+  <div class="video-wrapper">
+    @if (liveLink) {
+    <iframe [src]="liveLink | safeUrl" frameborder="0" allowfullscreen>
+    </iframe>
+    } @else {
+    <img
+      src="assets/imagem-estatica.jpg"
+      alt="No live stream at the moment"
+      class="static-image"
+    />
+    }
+  </div>
+
+  <button class="share-btn" (click)="shareLive()">
+    <i class="fas fa-share-alt"></i>
+    Compartilhar
+  </button>
+</div>
