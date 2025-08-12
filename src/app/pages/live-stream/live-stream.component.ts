@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-live-stream',
@@ -8,11 +9,25 @@ import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
   templateUrl: './live-stream.component.html',
   styleUrl: './live-stream.component.scss',
 })
-export class LiveStreamComponent {
+export class LiveStreamComponent implements OnInit {
   liveLink: string | null = null;
 
-  constructor() {
-    this.liveLink = 'https://www.youtube.com/embed/HuFYqnbVbzY';
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http
+      .get<{ liveLinkEmbed: string | null }>(
+        'https://site-difusora-backend.onrender.com/api/live-stream'
+      )
+      .subscribe({
+        next: (res) => {
+          this.liveLink = res.liveLinkEmbed;
+        },
+        error: (err) => {
+          console.error('Erro ao carregar link da live', err);
+          this.liveLink = null;
+        },
+      });
   }
 
   shareLive() {

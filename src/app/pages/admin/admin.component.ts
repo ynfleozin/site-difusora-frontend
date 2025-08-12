@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { NewsService } from '../../services/news.service';
 import { BannerService } from '../../services/banner.service';
+import { LiveStreamService } from '../../services/live-stream.service'; // import novo
 import { Banner } from '../../models/banner.model';
 import {
   ReactiveFormsModule,
@@ -19,7 +20,7 @@ import {
 import { Editor } from 'ngx-editor';
 import { NgxEditorModule } from 'ngx-editor';
 import { HttpClient } from '@angular/common/http';
-import { switchMap, of } from 'rxjs';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -31,16 +32,20 @@ import { switchMap, of } from 'rxjs';
 export class AdminComponent implements OnInit, OnDestroy {
   private newsService = inject(NewsService);
   private bannerService = inject(BannerService);
+  private liveStreamService = inject(LiveStreamService); // injetei aqui
   private http = inject(HttpClient);
 
   public banners: WritableSignal<Banner[]> = signal([]);
   public newsForm: FormGroup;
   public editor: Editor;
 
+  public liveLinkControl = new FormControl('', Validators.required);
+
   private selectedFile: File | null = null;
 
   constructor() {
     this.editor = new Editor();
+
     this.newsForm = new FormGroup({
       title: new FormControl('', [
         Validators.required,
@@ -54,6 +59,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadBanners();
+    this.loadLiveLink();
   }
 
   ngOnDestroy(): void {
@@ -72,11 +78,55 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
   }
 
+  loadLiveLink(): void {
+    this.liveStreamService.getLiveLink().subscribe({
+      next: (res) => {
+        if (res.liveLink) {
+          this.liveLinkControl.setValue(res.liveLink);
+          console.log('Link da live carregado:', res.liveLink);
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar link da live', err);
+      },
+    });
+  }
+
+  saveLiveLink(): void {
+    if (!this.liveLinkControl.value) {
+      alert('Por favor, insira o link da live.');
+      return;
+    }
+
+    this.liveStreamService.setLiveLink(this.liveLinkControl.value).subscribe({
+      next: () => {
+        alert('Link da live salvo com sucesso!');
+      },
+      error: (err) => {
+        alert('Erro ao salvar link da live.');
+        console.error(err);
+      },
+    });
+  }
+
+  removeLiveLink(): void {
+    this.liveStreamService.removeLiveLink().subscribe({
+      next: () => {
+        alert('Link da live removido!');
+        this.liveLinkControl.reset();
+      },
+      error: (err) => {
+        alert('Erro ao remover link da live.');
+        console.error(err);
+      },
+    });
+  }
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      console.log('Arquivo selectionado:', this.selectedFile.name);
+      console.log('Arquivo selecionado:', this.selectedFile.name);
     }
   }
 

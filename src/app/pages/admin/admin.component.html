@@ -78,4 +78,20 @@
     <p>Carregando banners ou nenhum banner encontrado...</p>
     }
   </div>
+
+  <div class="live-stream-container">
+    <h3>Gerenciar Link da Live</h3>
+    <div class="form-field">
+      <label for="liveLink">Link da Live (YouTube)</label>
+      <input
+        id="liveLink"
+        type="text"
+        [formControl]="liveLinkControl"
+        placeholder="Cole aqui o link da live"
+      />
+    </div>
+
+    <button (click)="saveLiveLink()">Salvar Link</button>
+    <button (click)="removeLiveLink()" class="danger">Remover Link</button>
+  </div>
 </section>

@@ -167,6 +167,53 @@
       color: #666;
     }
   }
+
+  .live-stream-container {
+    margin-top: 2rem;
+    background-color: #fafafa;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    input[type='text'] {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin-right: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+
+      &.danger {
+        background-color: #dc3545;
+        color: white;
+
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+    }
+  }
+
 }
 
 @media (max-width: 600px) {
