@@ -4,7 +4,7 @@
       <nav>
         <ul class="nav-links">
           <li class="nav-link"><a href="">Início</a></li>
-          <li class="nav-link"><a href="">Últimas Notícias</a></li>
+          <li class="nav-link"><a (click)="scrollToSection('latest-news')">Últimas Notícias</a></li>
           <li class="nav-link dropdown">
             <a (click)="toggleCategories('desktop')">Categorias</a>
             <ul class="dropdown-menu" [class.show]="showDesktopCategories">
@@ -46,7 +46,7 @@
     <div #menuOverlay class="mobile-menu-overlay">
       <ul #mobileLinks class="mobile-links">
         <li><a href="/">Início</a></li>
-        <li><a href="/">Últimas Notícias</a></li>
+        <li><a (click)="scrollToSection('latest-news')">Últimas Notícias</a></li>
         <li><a (click)="openPlayer()">Ouça Agora</a></li>
         <li class="dropdown-mobile">
           <a

@@ -153,4 +153,19 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     this.showPlayer = false;
     this.isPlaying = false;
   }
+
+  scrollToSection(sectionId: string) {
+    if (isPlatformBrowser(this.platformId)) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      if (this.mobileLinks && this.menuOverlay) {
+        this.mobileLinks.nativeElement.classList.remove('open');
+        this.menuOverlay.nativeElement.classList.remove('show');
+        this.showMobileCategories = false;
+      }
+    }
+  }
 }
