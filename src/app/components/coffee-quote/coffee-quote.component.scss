@@ -37,3 +37,15 @@
   }
 }
 }
+
+@media (max-width: 768px){
+  .coffee-section{
+    .c-container{
+      .c-table{
+        table{
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
+}
