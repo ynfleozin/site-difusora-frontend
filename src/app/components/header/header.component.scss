@@ -37,63 +37,64 @@
   background-color: #141414;
 
   // Menu Desktop
-.menu-desktop {
-  @include flex-center();
-  width: 100%;
-  padding: 0.5rem 1rem;
-
-  justify-content: space-between;
-
-  .h-logo {
+  .menu-desktop {
     @include flex-center();
+    width: 100%;
+    padding: 0.5rem 1rem;
 
-    img {
-      max-width: 100px;
-      height: auto;
+    justify-content: space-between;
+
+    .h-logo {
+      @include flex-center();
+
+      img {
+        max-width: 100px;
+        height: auto;
+      }
     }
-  }
 
-  .h-nav {
-    display: flex;
-    align-items: center;
-    margin-right: 15px;
-
-    .nav-links {
+    .h-nav {
       display: flex;
-      gap: 2.5rem;
-      list-style: none;
+      align-items: center;
+      margin-right: 15px;
 
-      .nav-link {
-        position: relative;
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
 
-        a {
-          @include nav-link-style();
-        }
+        .nav-link {
+          position: relative;
 
-        &.dropdown {
-          .dropdown-menu {
-            @include dropdown-base();
-            display: none;
-            margin-top: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
+          a {
+            @include nav-link-style();
+          }
 
-            &.show {
-              display: block;
-            }
+          &.dropdown {
+            .dropdown-menu {
+              @include dropdown-base();
+              display: none;
+              margin-top: 1rem;
+              left: 50%;
+              transform: translateX(-50%);
 
-            li {
-              a {
-                color: white;
-                padding: 12px 16px;
-                text-decoration: none;
+              &.show {
                 display: block;
-                text-align: left;
-                font-size: 0.9rem;
+              }
 
-                &:hover {
-                  background-color: $primary-color;
-                  border-bottom: none;
+              li {
+                a {
+                  color: white;
+                  padding: 12px 16px;
+                  text-decoration: none;
+                  display: block;
+                  text-align: left;
+                  font-size: 0.9rem;
+
+                  &:hover {
+                    background-color: $primary-color;
+                    border-bottom: none;
+                  }
                 }
               }
             }
@@ -102,7 +103,6 @@
       }
     }
   }
-}
 
 
   // Menu Mobile
@@ -111,8 +111,15 @@
     justify-content: space-between;
     width: 100%;
     align-items: center;
-    padding: 0 15px;
+    padding: 0.5rem;
     position: relative;
+
+    .logo-mobile {
+      img {
+        width: 100px;
+        height: auto;
+      }
+    }
 
     .menu-toggle {
       background-color: transparent;
@@ -121,7 +128,7 @@
       cursor: pointer;
 
       svg {
-        width: 45px;
+        width: 35px;
         height: auto;
       }
     }
