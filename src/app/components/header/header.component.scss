@@ -34,34 +34,33 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  background-color: $secondary-color;
+  background-color: #141414;
 
   // Menu Desktop
-  .menu-desktop {
+.menu-desktop {
+  @include flex-center();
+  width: 100%;
+  padding: 0.5rem 1rem;
+
+  justify-content: space-between;
+
+  .h-logo {
     @include flex-center();
-    width: 100%;
 
-    .h-logo {
-      @include flex-center();
-      padding: 1rem;
-
-      img {
-        max-width: 150px;
-      }
+    img {
+      max-width: 100px;
+      height: auto;
     }
+  }
 
-    .h-nav {
-      width: 100%;
-      padding: 1rem;
-      @include flex-center();
-      flex-direction: row;
-      background-color: #141414;
-      text-align: center;
-    }
+  .h-nav {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
 
     .nav-links {
       display: flex;
-      gap: 5rem;
+      gap: 2.5rem;
       list-style: none;
 
       .nav-link {
@@ -103,6 +102,8 @@
       }
     }
   }
+}
+
 
   // Menu Mobile
   .menu-mobile {
