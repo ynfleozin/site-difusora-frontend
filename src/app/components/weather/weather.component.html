@@ -1,14 +1,12 @@
 <section class="weather-container">
   @if(weather){
   <div class="weather-img">
-    <div>
-      <img [src]="weather.iconUrl" alt="Clima" />
-    </div>
-    <div class="weather-infos">
-      <p id="location">{{ weather.location }}</p>
-      <h2 id="temperature">{{ weather.temperature }}°</h2>
-      <p id="condition">{{ weather.condition | capitalize}}</p>
-    </div>
+    <img [src]="weather.iconUrl" alt="Clima" />
+  </div>
+  <div class="weather-infos">
+    <p id="location">{{ weather.location }}</p>
+    <h2 id="temperature">{{ weather.temperature }}°</h2>
+    <p id="condition">{{ weather.condition | capitalize }}</p>
   </div>
   }
 </section>

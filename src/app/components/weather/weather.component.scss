@@ -1,5 +1,6 @@
 .weather-container {
-  background-color: #ffffff;
+  background-color: #e4e4e480;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,6 +8,7 @@
   max-width: 500px;
   margin: 0 auto;
   border-radius: 15px;
+  gap: 2rem;
 
   .weather-img {
     display: flex;
@@ -25,11 +27,32 @@
     }
 
     #temperature {
-      font-size: 2rem;
+      font-size: 2.75rem;
     }
 
     #condition {
       font-size: 1rem;
     }
   }
+}
+
+@media(max-width: 768px) {
+  .weather-container {
+    max-width: 400px;
+
+    .weather-img {
+      display: flex;
+
+      img {
+        width: 100px;
+      }
+    }
+
+    .weather-infos {
+      #temperature {
+        font-size: 2rem;
+      }
+    }
+  }
+
 }
