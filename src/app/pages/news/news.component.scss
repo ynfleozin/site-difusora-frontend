@@ -210,3 +210,11 @@
     transform: rotate(360deg);
   }
 }
+
+:host ::ng-deep .news-content img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 1.5rem auto;
+  border-radius: 12px;
+}
