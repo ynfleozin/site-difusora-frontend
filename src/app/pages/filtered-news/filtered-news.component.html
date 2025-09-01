@@ -11,7 +11,9 @@
   } @else { @if (error) {
   <p class="error-message">{{ error }}</p>
   } @else if (filteredNews.length === 0) {
-  <p>Nenhuma notícia encontrada para esta categoria.</p>
+  <div class="empty-container">
+    <p>Nenhuma notícia encontrada para esta categoria.</p>
+  </div>
   } @else {
   <div class="news-grid">
     @for (newsItem of filteredNews; track newsItem.slug) {

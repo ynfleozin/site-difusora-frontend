@@ -1,5 +1,8 @@
+// Sugestão opcional para deixar o CSS mais abrangente
 :host(.is-loading) {
-  .news-grid {
+  .news-grid,
+  .empty-container,
+  .error-message {
     display: none !important;
   }
 }
@@ -30,6 +33,14 @@
     margin-bottom: 2rem;
     text-align: center;
     color: #333;
+  }
+
+  .empty-container {
+    text-align: center;
+
+    p {
+      color: #222;
+    }
   }
 
   .news-grid {
