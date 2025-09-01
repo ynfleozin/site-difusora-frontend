@@ -36,9 +36,11 @@
     Fonte: <span>{{ news.sourceName }}</span>
   </p>
 
+  @if(news.sourceUrl){
   <a class="full-article-button" [href]="news.sourceUrl" target="_blank">
     Ler notícia na íntegra
   </a>
+  }
 
   <div class="share-section">
     <p>Compartilhar:</p>
