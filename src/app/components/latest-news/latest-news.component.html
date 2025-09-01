@@ -1,17 +1,31 @@
 <div class="feed-container">
   <section class="latest-news-section">
     <h2>Últimas Notícias</h2>
+
     <div class="news-grid">
-      @for (news of latestNews; track news.title){
-      <app-news-card
-        [isFeatured]="false"
-        [title]="news.title"
-        [description]="news.description"
-        [imageUrl]="news.imageUrl || ''"
-        [category]="news.category || ''"
-        [slug]="news.slug || ''"
-      />
-      }
+      <ng-container *ngIf="isLoading">
+        <div class="skeleton-card" *ngFor="let i of [1, 2, 3, 4, 5, 6]"></div>
+      </ng-container>
+
+      <ng-container *ngIf="!isLoading && latestNews.length > 0">
+        <app-news-card
+          *ngFor="let news of latestNews"
+          [isFeatured]="false"
+          [title]="news.title"
+          [description]="news.description"
+          [imageUrl]="news.imageUrl || ''"
+          [category]="news.category || ''"
+          [slug]="news.slug || ''"
+        >
+        </app-news-card>
+      </ng-container>
+
+      <div
+        *ngIf="!isLoading && latestNews.length === 0"
+        class="empty-container"
+      >
+        <p>Nenhuma notícia disponível no momento.</p>
+      </div>
     </div>
   </section>
 </div>
