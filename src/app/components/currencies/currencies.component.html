@@ -1,13 +1,13 @@
 <section class="app-currencies">
   <div class="currency-list-desktop">
     @for (cotacao of cotacoes; track cotacao.symbol) {
-      <app-currency-card [currency]="cotacao"></app-currency-card>
+    <app-currency-card [currency]="cotacao"></app-currency-card>
     }
   </div>
 
-  <div class="currency-list-mobile">
+  <div class="currency-list-mobile animate-carousel" #carousel>
     @for (cotacao of cotacoesCarrossel; track $index) {
-      <app-currency-card [currency]="cotacao"></app-currency-card>
+    <app-currency-card [currency]="cotacao"></app-currency-card>
     }
   </div>
 </section>

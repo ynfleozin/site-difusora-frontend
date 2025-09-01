@@ -1,5 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  ViewChild,
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CurrenciesService } from '../../services/currencies.service';
 import { ApiResponse, DisplayCurrency } from '../../models/currency.model';
 import { CurrencyCardComponent } from '../currency-card/currency-card.component';
@@ -9,16 +18,18 @@ import { CurrencyCardComponent } from '../currency-card/currency-card.component'
   standalone: true,
   imports: [CommonModule, CurrencyCardComponent],
   templateUrl: './currencies.component.html',
-  styleUrl: './currencies.component.scss',
+  styleUrls: ['./currencies.component.scss'],
 })
-export class CurrenciesComponent implements OnInit {
-  // Lista para o grid do desktop (lista simples)
-  cotacoes: DisplayCurrency[] = [];
+export class CurrenciesComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('carousel') carouselEl!: ElementRef<HTMLDivElement>;
 
-  // Lista para o carrossel do mobile (lista duplicada)
+  cotacoes: DisplayCurrency[] = [];
   cotacoesCarrossel: DisplayCurrency[] = [];
 
-  constructor(private currenciesService: CurrenciesService) {}
+  constructor(
+    private currenciesService: CurrenciesService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.currenciesService.getCurrencyQuotes().subscribe({
@@ -35,6 +46,41 @@ export class CurrenciesComponent implements OnInit {
         this.cotacoesCarrossel = [];
       },
     });
+  }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.addEventListener(
+        'visibilitychange',
+        this.handleVisibilityChange
+      );
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.removeEventListener(
+        'visibilitychange',
+        this.handleVisibilityChange
+      );
+    }
+  }
+
+  private handleVisibilityChange = (): void => {
+    if (
+      isPlatformBrowser(this.platformId) &&
+      !document.hidden &&
+      this.carouselEl
+    ) {
+      this.restartCarouselAnimation();
+    }
+  };
+
+  private restartCarouselAnimation(): void {
+    const carousel = this.carouselEl.nativeElement;
+    carousel.classList.remove('animate-carousel');
+    void carousel.offsetWidth;
+    carousel.classList.add('animate-carousel');
   }
 
   private transformApiData(data: ApiResponse): DisplayCurrency[] {
