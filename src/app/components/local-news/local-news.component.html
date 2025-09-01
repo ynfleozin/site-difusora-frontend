@@ -2,31 +2,41 @@
   <h2>Notícias Locais</h2>
 
   <div class="news-grid">
-    @if (featuredNews) {
-    <div class="featured-news-wrapper">
-      <app-news-card
-        [category]="featuredNews.category"
-        [title]="featuredNews.title"
-        [description]="featuredNews.description"
-        [imageUrl]="featuredNews.imageUrl"
-        [isFeatured]="true"
-        [slug]="featuredNews.slug"
-      ></app-news-card>
-    </div>
-    }
+    <ng-container *ngIf="isLoading">
+      <div class="featured-news-wrapper skeleton-card"></div>
+      <div class="skeleton-card" *ngFor="let i of [1, 2, 3, 4]"></div>
+    </ng-container>
 
-    @for (news of regularNews; track news.slug) {
-    <app-news-card
-      [category]="news.category"
-      [title]="news.title"
-      [description]="news.description"
-      [imageUrl]="news.imageUrl"
-      [isFeatured]="false"
-      [slug]="news.slug"
-    ></app-news-card>
-    } @empty {
-    <p>Nenhuma outra notícia local disponível no momento.</p>
-    }
+    <ng-container
+      *ngIf="!isLoading && (featuredNews || regularNews.length > 0)"
+    >
+      <div *ngIf="featuredNews" class="featured-news-wrapper">
+        <app-news-card
+          [category]="featuredNews.category"
+          [title]="featuredNews.title"
+          [description]="featuredNews.description"
+          [imageUrl]="featuredNews.imageUrl"
+          [isFeatured]="true"
+          [slug]="featuredNews.slug"
+        ></app-news-card>
+      </div>
+
+      <app-news-card
+        *ngFor="let news of regularNews"
+        [category]="news.category"
+        [title]="news.title"
+        [description]="news.description"
+        [imageUrl]="news.imageUrl"
+        [isFeatured]="false"
+        [slug]="news.slug"
+      ></app-news-card>
+    </ng-container>
+    <div
+      *ngIf="!isLoading && !featuredNews && regularNews.length === 0"
+      class="empty-container"
+    >
+      <p>Nenhuma notícia local disponível no momento.</p>
+    </div>
   </div>
 
   <button class="read-more-btn" routerLink="/categorias/local">Ver mais</button>
