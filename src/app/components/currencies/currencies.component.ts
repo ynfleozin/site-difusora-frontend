@@ -35,9 +35,7 @@ export class CurrenciesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currenciesService.getCurrencyQuotes().subscribe({
       next: (apiData) => {
         const singleList = this.transformApiData(apiData);
-
         this.cotacoes = singleList;
-
         this.cotacoesCarrossel = [...singleList, ...singleList];
       },
       error: (err) => {
@@ -50,33 +48,24 @@ export class CurrenciesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      document.addEventListener(
-        'visibilitychange',
-        this.handleVisibilityChange
-      );
+      window.addEventListener('pageshow', this.handlePageShow);
     }
   }
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-      document.removeEventListener(
-        'visibilitychange',
-        this.handleVisibilityChange
-      );
+      window.removeEventListener('pageshow', this.handlePageShow);
     }
   }
 
-  private handleVisibilityChange = (): void => {
-    if (
-      isPlatformBrowser(this.platformId) &&
-      !document.hidden &&
-      this.carouselEl
-    ) {
+  private handlePageShow = (event: PageTransitionEvent): void => {
+    if (event.persisted && this.carouselEl) {
       this.restartCarouselAnimation();
     }
   };
 
   private restartCarouselAnimation(): void {
+    if (!this.carouselEl) return;
     const carousel = this.carouselEl.nativeElement;
     carousel.classList.remove('animate-carousel');
     void carousel.offsetWidth;
