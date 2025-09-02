@@ -1,4 +1,4 @@
-<section class="weather-container">
+<section class="weather-container" [ngClass]="timeOfDayClass">
   @if(weather){
   <div class="weather-img">
     <img [src]="weather.iconUrl" alt="Clima" />

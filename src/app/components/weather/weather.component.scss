@@ -1,5 +1,4 @@
 .weather-container {
-  background-color: #e4e4e480;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   display: flex;
   justify-content: center;
@@ -9,6 +8,17 @@
   margin: 0 auto;
   border-radius: 15px;
   gap: 2rem;
+  transition: background 0.5s ease-in-out;
+
+  &.day-gradient {
+    background: linear-gradient(180deg, #87ceeb 0%, #5f8eb4 100%);
+    color: #333;
+  }
+
+  &.night-gradient {
+    background: linear-gradient(180deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    color: #ffffff;
+  }
 
   .weather-img {
     display: flex;
@@ -36,7 +46,7 @@
   }
 }
 
-@media(max-width: 768px) {
+@media (max-width: 768px) {
   .weather-container {
     max-width: 300px;
 
@@ -54,5 +64,4 @@
       }
     }
   }
-
 }
