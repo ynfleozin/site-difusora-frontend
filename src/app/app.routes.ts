@@ -7,6 +7,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './services/auth.guard';
 import { LiveStreamComponent } from './pages/live-stream/live-stream.component';
+import { HistoryComponent } from './pages/history/history.component';
 
 export const routes: Routes = [
   {
@@ -29,6 +30,11 @@ export const routes: Routes = [
     path: 'assista-ao-vivo',
     component: LiveStreamComponent,
     title: 'Assista ao vivo - Difusora Colatina',
+  },
+  {
+    path: 'historia',
+    component: HistoryComponent,
+    title: 'Nossa História - Difusora Colatina',
   },
   {
     path: 'login',
