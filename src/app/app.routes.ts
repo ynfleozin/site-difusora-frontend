@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './services/auth.guard';
 import { LiveStreamComponent } from './pages/live-stream/live-stream.component';
 import { HistoryComponent } from './pages/history/history.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,11 @@ export const routes: Routes = [
     path: 'historia',
     component: HistoryComponent,
     title: 'Nossa História - Difusora Colatina',
+  },
+  {
+    path: 'fale-conosco',
+    component: ContactComponent,
+    title: 'Fale Conosco'
   },
   {
     path: 'login',
