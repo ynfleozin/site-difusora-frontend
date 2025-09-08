@@ -1,0 +1,205 @@
+.history-container {
+  font-family: 'Roboto', sans-serif;
+  color: #333; 
+}
+
+.city-banner {
+  position: relative;
+  width: 100%;
+  height: 40vh;
+  background: url('https://uploads.folhavitoria.com.br/2024/10/sLYR1eBq-colatina-2-1536x1022.webp') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  mix-blend-mode: multiply;
+}
+
+.city-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #CF0101;
+  opacity: 0.7;
+  mix-blend-mode: screen;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  color: #fff; 
+  padding: 0 20px;
+}
+
+.banner-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.history-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #f9f9f9; 
+}
+
+.intro-section {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.intro-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #CF0101;
+  margin-bottom: 15px;
+}
+
+.intro-section p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555; 
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    position: relative;
+    color: #333;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: #CF0101;
+    margin: 10px auto 0;
+}
+
+.timeline {
+  position: relative;
+  padding: 20px 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 100%;
+  background-color: #ccc; 
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 50px;
+  width: 50%;
+}
+
+.timeline-item:nth-child(odd) {
+  left: 0;
+  padding-right: 30px;
+  text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+  left: 50%;
+  padding-left: 30px;
+  text-align: left;
+}
+
+.timeline-icon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #CF0101; 
+  border: 3px solid #fff;
+  z-index: 1;
+}
+
+.timeline-content {
+  background-color: #fff; 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.timeline-content h3 {
+  color: #CF0101;
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.values-section {
+    padding-top: 40px;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+
+.value-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-top: 5px solid #CF0101; 
+}
+
+.value-card h4 {
+    font-size: 1.3rem;
+    color: #CF0101;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .banner-content h1 {
+    font-size: 2rem;
+  }
+
+  .timeline::before {
+    left: 10px;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 0;
+    text-align: left !important;
+  }
+
+  .timeline-item:nth-child(even) {
+    left: 0;
+  }
+
+  .timeline-icon {
+    left: 10px;
+  }
+}
