@@ -1,1 +1,72 @@
-<p>contact works!</p>
+<div class="contact-container">
+  <div class="contact-header">
+    <h1>Fale Conosco</h1>
+    <p class="subtitle">Sua voz é a nossa frequência. Mande sua mensagem, peça sua música ou anuncie conosco!</p>
+  </div>
+
+  <div class="contact-content">
+    <div class="contact-info">
+      <h2>Nossos Contatos</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet.</p>
+      
+      <div class="info-item">
+        <i class="icon-phone"></i>
+        <div>
+          <strong>WhatsApp da Rádio</strong>
+          <span>(27) 99999-0101</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <i class="icon-mail"></i>
+        <div>
+          <strong>E-mail Geral</strong>
+          <span>contatodifusorafake.com.br</span>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <i class="icon-dollar"></i>
+        <div>
+          <strong>Comercial</strong>
+          <span>comercialdifusorafake.com.br</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <i class="icon-location"></i>
+        <div>
+          <strong>Nosso Estúdio</strong>
+          <span>Av. Getúlio Vargas, 123, Centro, Colatina - ES</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h2>Mande sua Mensagem</h2>
+      <form id="contact-form" (ngSubmit)="sendEmail($event)">
+        <div class="form-group">
+          <label for="from_name">Seu Nome</label>
+          <input type="text" id="from_name" name="from_name" placeholder="Digite seu nome completo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="from_email">Seu E-mail</label>
+          <input type="email" id="from_email" name="from_email" placeholder="seuemail@exemplo.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Assunto</label>
+          <input type="text" id="subject" name="subject" placeholder="Sobre o que você quer falar?" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Sua Mensagem</label>
+          <textarea id="message" name="message" rows="6" placeholder="Escreva sua mensagem aqui..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Enviar Mensagem</button>
+      </form>
+    </div>
+  </div>
+</div>

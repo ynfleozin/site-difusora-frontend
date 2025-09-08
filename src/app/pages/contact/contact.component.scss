@@ -1,0 +1,157 @@
+.contact-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h1 {
+    font-size: 2.8rem;
+    color: #333; 
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: #555; 
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-info {
+  h2 {
+    font-size: 1.8rem;
+    color: #CF0101;
+    margin-bottom: 20px;
+    border-left: 4px solid #CF0101;
+    padding-left: 10px;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #555;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+
+    i {
+      font-size: 24px;
+      color: #CF0101; 
+      margin-right: 20px;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f4f4f4; 
+      border-radius: 50%;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+
+      strong {
+        font-size: 1.1rem;
+        color: #333; 
+      }
+
+      span {
+        color: #555; 
+      }
+    }
+  }
+}
+
+.contact-form {
+  background-color: #f4f4f4; 
+  padding: 30px;
+  border-radius: 8px;
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #555; 
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: #CF0101;
+        box-shadow: 0 0 5px rgba(207, 1, 1, 0.3);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+    }
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #CF0101;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:hover {
+      background-color: #a50101;
+      transform: translateY(-2px);
+    }
+  }
+}
