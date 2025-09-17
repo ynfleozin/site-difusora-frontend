@@ -7,7 +7,13 @@ import {
   Inject,
   PLATFORM_ID,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
+import {
+  CommonModule,
+  isPlatformBrowser,
+  NgOptimizedImage,
+} from '@angular/common';
+import { PlayerService } from '../../services/player.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +33,16 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   @ViewChild('mobileLinks', { static: false }) mobileLinks!: ElementRef;
   @ViewChild('menuOverlay', { static: false }) menuOverlay!: ElementRef;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  private playSubscription: Subscription;
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private playerService: PlayerService
+  ) {
+    this.playSubscription = this.playerService.playRequest$.subscribe(() => {
+      this.openPlayer();
+    });
+  }
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -55,6 +70,9 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     if (isPlatformBrowser(this.platformId)) {
       document.removeEventListener('click', this.onDocumentClick.bind(this));
+    }
+    if (this.playSubscription) {
+      this.playSubscription.unsubscribe();
     }
   }
 
