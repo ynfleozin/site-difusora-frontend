@@ -32,11 +32,11 @@ export const routes: Routes = [
     component: LiveStreamComponent,
     title: 'Assista ao vivo - Difusora Colatina',
   },
-  {
-    path: 'historia',
-    component: HistoryComponent,
-    title: 'Nossa História - Difusora Colatina',
-  },
+  // {
+  //   path: 'historia',
+  //   component: HistoryComponent,
+  //   title: 'Nossa História - Difusora Colatina',
+  // },
   {
     path: 'fale-conosco',
     component: ContactComponent,
