@@ -9,7 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { NewsService } from '../../services/news.service';
 import { BannerService } from '../../services/banner.service';
-import { LiveStreamService } from '../../services/live-stream.service'; // import novo
+import { LiveStreamService } from '../../services/live-stream.service'; 
 import { Banner } from '../../models/banner.model';
 import {
   ReactiveFormsModule,
@@ -32,7 +32,7 @@ import { switchMap } from 'rxjs';
 export class AdminComponent implements OnInit, OnDestroy {
   private newsService = inject(NewsService);
   private bannerService = inject(BannerService);
-  private liveStreamService = inject(LiveStreamService); // injetei aqui
+  private liveStreamService = inject(LiveStreamService);
   private http = inject(HttpClient);
 
   public banners: WritableSignal<Banner[]> = signal([]);
@@ -239,6 +239,19 @@ export class AdminComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         alert('Falha ao atualizar o banner.');
+        console.error(err);
+      },
+    });
+  }
+
+  toggleBannerVisibility(id: string, isVisible: boolean): void {
+    this.bannerService.updateBannerVisibility(id, isVisible).subscribe({
+      next: () => {
+        alert(`Status do banner atualizado com sucesso!`);
+        this.loadBanners();
+      },
+      error: (err) => {
+        alert('Falha ao atualizar a visibilidade do banner.');
         console.error(err);
       },
     });

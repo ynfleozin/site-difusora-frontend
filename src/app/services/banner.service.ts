@@ -1,9 +1,8 @@
-// banner.service.ts (modificado)
 import { Banner } from './../models/banner.model';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment-development';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +19,9 @@ export class BannerService {
   updateBannerImage(id: string, newImageUrl: string): Observable<any> {
     const body = { imageUrl: newImageUrl };
     return this.http.put(`${this.apiUrl}/${id}`, body);
+  }
+
+  updateBannerVisibility(id: string, isVisible: boolean): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/visibility`, { isVisible });
   }
 }

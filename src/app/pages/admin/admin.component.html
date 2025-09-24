@@ -55,7 +55,7 @@
     <h3>Gerenciar Banners</h3>
 
     @for (banner of banners(); track banner.id) {
-    <div class="banner-manager">
+    <div class="banner-manager" [class.is-hidden]="!banner.isVisible">
       <h4>{{ banner.name }} (ID: {{ banner.id }})</h4>
       <p>Imagem Atual:</p>
       <img
@@ -63,6 +63,13 @@
         alt="{{ banner.name }}"
         class="current-banner-preview"
       />
+
+      <button
+        (click)="toggleBannerVisibility(banner.id, !banner.isVisible)"
+        class="toggle-visibility-btn"
+      >
+        {{ banner.isVisible ? "Ocultar Banner" : "Mostrar Banner" }}
+      </button>
 
       <div class="form-field">
         <label for="bannerFile-{{ banner.id }}">Enviar nova imagem</label>

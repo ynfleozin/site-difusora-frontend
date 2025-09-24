@@ -1,4 +1,3 @@
-// home.component.ts (AJUSTADO)
 import {
   Component,
   OnInit,
@@ -13,8 +12,8 @@ import { AdBannerHorizontalComponent } from '../../components/ad-banner-horizont
 import { LatestNewsComponent } from '../../components/latest-news/latest-news.component';
 import { BannerService } from '../../services/banner.service';
 import { Banner } from '../../models/banner.model';
-import { WeatherComponent } from "../../components/weather/weather.component";
-import { CoffeeQuoteComponent } from "../../components/coffee-quote/coffee-quote.component";
+import { WeatherComponent } from '../../components/weather/weather.component';
+import { CoffeeQuoteComponent } from '../../components/coffee-quote/coffee-quote.component';
 
 @Component({
   selector: 'app-home',
@@ -26,8 +25,8 @@ import { CoffeeQuoteComponent } from "../../components/coffee-quote/coffee-quote
     AdBannerHorizontalComponent,
     LatestNewsComponent,
     WeatherComponent,
-    CoffeeQuoteComponent
-],
+    CoffeeQuoteComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -44,8 +43,12 @@ export class HomeComponent implements OnInit {
   loadAdBanners(): void {
     this.bannerService.getBanners().subscribe({
       next: (data) => {
-        this.adBanner1.set(data.find((banner) => banner.id === 'ad-banner-1'));
-        this.adBanner2.set(data.find((banner) => banner.id === 'ad-banner-2'));
+        this.adBanner1.set(
+          data.find((banner) => banner.id === 'ad-banner-1' && banner.isVisible)
+        );
+        this.adBanner2.set(
+          data.find((banner) => banner.id === 'ad-banner-2' && banner.isVisible)
+        );
       },
       error: (err) => {
         console.error('Falha ao carregar banners de anúncio na Home:', err);
