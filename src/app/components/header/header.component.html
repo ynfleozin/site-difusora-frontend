@@ -2,6 +2,7 @@
   <div class="menu-desktop">
     <div class="h-logo">
       <a href="#"><img ngSrc="assets/imgs/logo-white.png" alt="Logo" width="130" height="60"></a>
+      <p>A notícia não para. <br> <span>A gente também não.</span></p>
     </div>
     <div class="h-nav">
       <nav>
@@ -34,18 +35,12 @@
   <div class="menu-mobile">
     <div class="logo-mobile">
       <a href="#"><img ngSrc="assets/imgs/logo-white.png" alt="Logo" width="130" height="60"></a>
+      <p>A notícia não para. <br> <span>A gente também não.</span></p>
     </div>
     <button #menuToggle class="menu-toggle">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-      >
-        <path
-          fill="#fff"
-          d="M2 6a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m0 6.032a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m1 5.033a1 1 0 1 0 0 2h18a1 1 0 0 0 0-2z"
-        />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path fill="#fff"
+          d="M2 6a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m0 6.032a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m1 5.033a1 1 0 1 0 0 2h18a1 1 0 0 0 0-2z" />
       </svg>
     </button>
 
@@ -54,15 +49,9 @@
         <li><a href="/">Início</a></li>
         <li><a (click)="openPlayer()">Ouça Agora</a></li>
         <li class="dropdown-mobile">
-          <a
-            (click)="toggleCategories('mobile'); $event.stopPropagation()"
-            [class.active]="showMobileCategories"
-          >
+          <a (click)="toggleCategories('mobile'); $event.stopPropagation()" [class.active]="showMobileCategories">
             Categorias
-            <i
-              class="fas fa-chevron-down dropdown-arrow"
-              [class.rotated]="showMobileCategories"
-            ></i>
+            <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="showMobileCategories"></i>
           </a>
           <ul class="dropdown-menu-mobile" [class.show]="showMobileCategories">
             <li><a href="/categorias/cultura">Cultura</a></li>
@@ -86,10 +75,7 @@
 
 <div class="mini-player" [class.hidden-player]="!showPlayer">
   <audio #audio controls hidden>
-    <source
-      src="https://r15.ciclano.io/proxy/zyiradio/stream"
-      type="audio/mpeg"
-    />
+    <source src="https://r15.ciclano.io/proxy/zyiradio/stream" type="audio/mpeg" />
     Seu navegador não suporta o áudio.
   </audio>
   <div class="player-controls">
